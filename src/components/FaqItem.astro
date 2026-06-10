@@ -1,0 +1,21 @@
+---
+interface Props {
+  question: string;
+  class?: string;
+}
+const { question, class: className = "" } = Astro.props;
+---
+
+<details class={`group bg-navy-card border-gold/15 open:border-gold/40 rounded-xl border transition-colors ${className}`}>
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-medium text-white [&::-webkit-details-marker]:hidden"
+  >
+    {question}
+    <span class="text-gold shrink-0 text-xl transition-transform duration-200 group-open:rotate-45" aria-hidden="true">
+      +
+    </span>
+  </summary>
+  <div class="text-cream-dim px-6 pb-5 text-sm leading-relaxed">
+    <slot />
+  </div>
+</details>

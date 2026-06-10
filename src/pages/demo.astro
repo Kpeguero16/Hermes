@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CalendlyEmbed from "../components/CalendlyEmbed.astro";
+import { SITE } from "../config";
+
+const inputClass =
+  "bg-navy-card border-gold/20 focus:border-gold w-full rounded-lg border px-4 py-3 text-[15px] text-cream placeholder:text-cream-dim/60 outline-none transition-colors";
+const labelClass = "text-cream mb-1.5 block text-sm font-medium";
+---
+
+<BaseLayout
+  title="Book a Demo — HermeΣ"
+  description="See HermeΣ run on a real meeting PDF — 20 minutes, no commitment. Book a live demo or send us a request and we'll reply within one business day."
+>
+  <section class="bg-grid px-6 pt-20 pb-14 text-center md:px-12">
+    <p class="fade-up text-gold mb-5 text-xs font-medium tracking-[5px] uppercase">Book a Demo</p>
+    <h1 class="fade-up fade-up-d1 font-display text-[clamp(48px,8vw,84px)] leading-none tracking-[4px] text-white">
+      See it run <span class="text-gold">live.</span>
+    </h1>
+    <p class="fade-up fade-up-d2 font-serif text-cream-dim mx-auto mt-6 max-w-xl text-xl font-light italic">
+      Twenty minutes, no commitment. Bring a real meeting PDF and watch HermeΣ summarize it, assign
+      the action items, and sync the calendar — live.
+    </p>
+  </section>
+
+  <section class="px-6 pb-16 md:px-12" aria-label="Schedule a demo">
+    <div class="mx-auto w-full max-w-3xl">
+      <CalendlyEmbed />
+    </div>
+  </section>
+
+  <section class="px-6 pb-24 md:px-12" aria-labelledby="request-title">
+    <div class="mx-auto w-full max-w-xl">
+      <div class="mb-10 flex items-center gap-4" aria-hidden="true">
+        <span class="bg-gold/20 h-px flex-1"></span>
+        <span class="text-cream-dim text-xs tracking-[3px] uppercase">or send a request</span>
+        <span class="bg-gold/20 h-px flex-1"></span>
+      </div>
+
+      <h2 id="request-title" class="sr-only">Demo request form</h2>
+
+      <!--
+        Netlify Forms: detected automatically at deploy time via data-netlify.
+        Submissions appear in the Netlify dashboard; enable email notifications
+        under Site settings → Forms → Form notifications.
+      -->
+      <form
+        name="demo-request"
+        method="POST"
+        action="/thanks"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="flex flex-col gap-5"
+      >
+        <input type="hidden" name="form-name" value="demo-request" />
+        <p class="hidden" aria-hidden="true">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="name" class={labelClass}>Name</label>
+            <input id="name" name="name" type="text" required autocomplete="name" class={inputClass} placeholder="Your name" />
+          </div>
+          <div>
+            <label for="email" class={labelClass}>Email</label>
+            <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} placeholder="you@school.edu" />
+          </div>
+        </div>
+
+        <div>
+          <label for="organization" class={labelClass}>Chapter / Organization</label>
+          <input
+            id="organization"
+            name="organization"
+            type="text"
+            required
+            class={inputClass}
+            placeholder="e.g. Theta Delta Chapter of Sigma Lambda Beta, FIU"
+          />
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="role" class={labelClass}>Your role</label>
+            <input id="role" name="role" type="text" class={inputClass} placeholder="e.g. President, Secretary" />
+          </div>
+          <div>
+            <label for="size" class={labelClass}>Chapter size</label>
+            <select id="size" name="size" class={inputClass}>
+              <option value="">Select…</option>
+              <option>Under 25 members</option>
+              <option>25–50 members</option>
+              <option>50–100 members</option>
+              <option>100+ members</option>
+              <option>Council / multiple chapters</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="message" class={labelClass}>Anything we should know?</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            class={inputClass}
+            placeholder="What does your chapter's meeting workflow look like today?"></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="bg-gold text-navy cursor-pointer rounded-full px-8 py-3.5 text-[15px] font-semibold tracking-wide transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(201,168,76,0.3)]"
+        >
+          Request a Demo
+        </button>
+      </form>
+
+      <p class="text-cream-dim mt-8 text-center text-sm">
+        Prefer email? Reach us directly at
+        <a href={`mailto:${SITE.contactEmail}`} class="text-gold underline underline-offset-2">{SITE.contactEmail}</a>
+        — we reply within one business day.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

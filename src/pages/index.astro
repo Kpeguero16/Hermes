@@ -1,0 +1,267 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import PainCard from "../components/PainCard.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import FlowStep from "../components/FlowStep.astro";
+import GodCard from "../components/GodCard.astro";
+import { SITE, CLIENT } from "../config";
+
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: SITE.name,
+  alternateName: SITE.nameAscii,
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description: SITE.description,
+  url: SITE.url,
+};
+---
+
+<BaseLayout
+  title="HermeΣ — Chapter Admin, Automated | Built for Greek Life"
+  description={SITE.description}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+
+  <!-- HERO -->
+  <section class="bg-grid relative flex min-h-[calc(100vh-69px)] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center md:px-12">
+    <div class="glow-gold pointer-events-none absolute -top-52 -right-52 h-[700px] w-[700px]" aria-hidden="true"></div>
+
+    <p class="fade-up text-gold mb-6 text-xs font-medium tracking-[5px] uppercase">
+      Built for Greek Life
+    </p>
+    <h1 class="fade-up fade-up-d1 font-display max-w-5xl text-[clamp(56px,10vw,120px)] leading-[0.95] tracking-[4px] text-white">
+      Run the chapter.<br />
+      <span class="text-gold">Not the paperwork.</span>
+    </h1>
+    <p class="fade-up fade-up-d2 font-serif text-cream-dim mt-7 max-w-2xl text-[clamp(18px,2.5vw,24px)] font-light italic">
+      HermeΣ reads your meeting minutes the moment they hit Slack — posting clean summaries,
+      assigning action items by member, and keeping your Google Calendar in sync. Automatically.
+    </p>
+
+    <div class="fade-up fade-up-d3 mt-10 flex flex-wrap justify-center gap-4">
+      <Button href="/demo">Book a Demo</Button>
+      <Button href="#how" variant="ghost">See How It Works</Button>
+    </div>
+
+    <div class="fade-up fade-up-d3 bg-gold/10 border-gold/30 text-gold mt-12 inline-flex items-center gap-3 rounded-full border px-6 py-2.5 text-[12px] tracking-[2px] uppercase">
+      <span class="pulse-dot bg-gold h-2 w-2 rounded-full" aria-hidden="true"></span>
+      Trusted by {CLIENT.chapter} · Sigma Lambda Beta · FIU
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="bg-navy-mid px-6 py-24 md:px-12" aria-labelledby="problem-title">
+    <div class="mx-auto w-full max-w-5xl">
+      <SectionLabel class="reveal">The Problem</SectionLabel>
+      <SectionTitle class="reveal reveal-d1" id="problem-title">
+        Chapter admin is <em>killing</em> your officers.
+      </SectionTitle>
+      <div class="grid gap-6 md:grid-cols-3">
+        <PainCard number="01" title="Action items vanish" class="reveal reveal-d2">
+          Minutes get sent, skimmed, and forgotten. Every week, tasks that members committed to in
+          the room fall through the cracks by Friday.
+        </PainCard>
+        <PainCard number="02" title="The calendar is always behind" class="reveal reveal-d3">
+          A date changes in the meeting — and three weeks later nobody shows up, because the shared
+          calendar never got the memo.
+        </PainCard>
+        <PainCard number="03" title="Officers drown in busywork" class="reveal reveal-d4">
+          Your secretary spends hours summarizing PDFs. Your VP spends hours updating calendars.
+          That's time stolen from everything your chapter actually exists to do.
+        </PainCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="px-6 py-24 md:px-12" aria-labelledby="solution-title">
+    <div class="mx-auto grid w-full max-w-5xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <SectionLabel class="reveal">The Solution</SectionLabel>
+        <h2 id="solution-title" class="sr-only">What is HermeΣ</h2>
+        <div class="reveal reveal-d1 font-serif flex flex-col gap-6 text-[22px] leading-relaxed font-light">
+          <p>
+            Meet <strong class="text-gold font-normal">HermeΣ</strong> — an intelligent automation
+            that watches your chapter's minutes channel in Slack and acts the moment a meeting PDF
+            drops.
+          </p>
+          <p>
+            No manual summaries. No forgotten to-dos. No calendar blindness. HermeΣ handles it
+            <strong class="text-gold font-normal">automatically, instantly, every time.</strong>
+          </p>
+          <p>
+            Named for the Greek god of communication and swift action — because if anyone
+            understands Greek organizations, it's an actual Greek god.
+          </p>
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <GodCard />
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="bg-navy-mid scroll-mt-20 px-6 py-24 md:px-12" aria-labelledby="how-title">
+    <div class="mx-auto w-full max-w-3xl">
+      <SectionLabel class="reveal">The Workflow</SectionLabel>
+      <SectionTitle class="reveal reveal-d1" id="how-title">
+        Four steps. <em>Zero effort.</em>
+      </SectionTitle>
+      <div>
+        <FlowStep num={1} title="Meeting ends — minutes hit Slack" chip="Slack trigger" class="reveal reveal-d2">
+          Someone drops the meeting-minutes PDF into your chapter's minutes channel. That's the only
+          manual step in the entire process.
+        </FlowStep>
+        <FlowStep num={2} title="HermeΣ reads and understands" chip="AI document parsing" class="reveal reveal-d3">
+          AI extracts everything that matters — decisions made, dates announced, and most
+          importantly: who committed to what.
+        </FlowStep>
+        <FlowStep num={3} title="A clean summary posts back" chip="Auto-summary · Slack post" class="reveal reveal-d4">
+          Every member gets a structured recap with action items organized by owner. No digging
+          through pages of notes.
+        </FlowStep>
+        <FlowStep num={4} title="The calendar updates itself" chip="Google Calendar sync" last class="reveal reveal-d5">
+          Events mentioned in the minutes are created, updated, or removed on your chapter's shared
+          Google Calendar — no officer touch needed.
+        </FlowStep>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="bg-grid scroll-mt-20 px-6 py-24 md:px-12" aria-labelledby="features-title">
+    <div class="mx-auto w-full max-w-5xl">
+      <SectionLabel class="reveal">What You Get</SectionLabel>
+      <SectionTitle class="reveal reveal-d1" id="features-title">
+        Built for how chapters <em>actually run.</em>
+      </SectionTitle>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <FeatureCard icon="📄" title="Instant meeting summaries" class="reveal reveal-d2">
+          AI-generated summaries post to Slack within minutes of the upload. Clear, concise, nothing
+          missed.
+        </FeatureCard>
+        <FeatureCard icon="✅" title="Member-by-member task lists" class="reveal reveal-d3">
+          Every action item organized by who owns it. Members know exactly what's expected without
+          digging through pages of notes.
+        </FeatureCard>
+        <FeatureCard icon="📅" title="Live calendar sync" class="reveal reveal-d4">
+          HermeΣ creates, edits, and removes events on your chapter's Google Calendar based on what
+          was actually decided in the meeting.
+        </FeatureCard>
+        <FeatureCard icon="⚡" title="Always on — zero oversight" class="reveal reveal-d5">
+          HermeΣ never misses a PDF. Nobody has to remember to run it, configure it, or check if it
+          worked. It just runs.
+        </FeatureCard>
+        <FeatureCard icon="🔌" title="Works with what you have" class="reveal reveal-d5">
+          Built on the tools your chapter already uses — Slack and Google. No new software to learn.
+          No migration headaches.
+        </FeatureCard>
+        <FeatureCard icon="📈" title="Scales with your org" class="reveal reveal-d6">
+          One chapter today, your whole council tomorrow. HermeΣ deploys to any chapter of any Greek
+          organization, nationwide.
+        </FeatureCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT: BEFORE / AFTER -->
+  <section class="bg-navy-mid px-6 py-24 md:px-12" aria-labelledby="impact-title">
+    <div class="mx-auto w-full max-w-4xl">
+      <SectionLabel class="reveal">The Impact</SectionLabel>
+      <SectionTitle class="reveal reveal-d1" id="impact-title">
+        Before HermeΣ. <em>After HermeΣ.</em>
+      </SectionTitle>
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="reveal reveal-d2 rounded-xl border border-[rgba(192,57,43,0.25)] bg-[rgba(192,57,43,0.08)] p-8">
+          <p class="mb-5 text-[11px] font-semibold tracking-[4px] text-[#E57373] uppercase">Without HermeΣ</p>
+          {
+            [
+              "Officers spend hours after every meeting writing up summaries and updating calendars",
+              "Members skim or ignore the minutes PDF — action items get missed",
+              "Events are added to the calendar days late, or not at all",
+              "The secretary is held responsible for things that should be automatic",
+              "Chapter accountability suffers — not from lack of care, but lack of systems",
+            ].map((item) => (
+              <p class="text-cream-dim mb-4 flex items-start gap-3 text-sm leading-relaxed">
+                <span class="shrink-0 font-bold text-[#E57373]" aria-hidden="true">✕</span>
+                {item}
+              </p>
+            ))
+          }
+        </div>
+        <div class="reveal reveal-d3 rounded-xl border border-[rgba(29,106,69,0.3)] bg-[rgba(29,106,69,0.08)] p-8">
+          <p class="mb-5 text-[11px] font-semibold tracking-[4px] text-[#66BB6A] uppercase">With HermeΣ</p>
+          {
+            [
+              "Officers reclaim their time — the system handles post-meeting admin instantly",
+              "Every member gets a direct, clear list of what they need to do",
+              "Google Calendar reflects reality within minutes of the meeting ending",
+              "The secretary focuses on facilitation, not transcription",
+              "Chapter accountability becomes a structural feature, not a personal burden",
+            ].map((item) => (
+              <p class="text-cream-dim mb-4 flex items-start gap-3 text-sm leading-relaxed">
+                <span class="shrink-0 font-bold text-[#66BB6A]" aria-hidden="true">✓</span>
+                {item}
+              </p>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY TEASER -->
+  <section class="px-6 py-24 md:px-12" aria-labelledby="proof-title">
+    <div class="mx-auto w-full max-w-4xl text-center">
+      <SectionLabel class="reveal justify-center">Proven in the Field</SectionLabel>
+      <h2 id="proof-title" class="reveal reveal-d1 font-display mb-6 text-[clamp(36px,5vw,56px)] leading-none tracking-[3px] text-white">
+        Live at <em class="text-gold not-italic">Sigma Lambda Beta, FIU.</em>
+      </h2>
+      <p class="reveal reveal-d2 font-serif text-cream-dim mx-auto mb-10 max-w-2xl text-xl font-light italic">
+        The Theta Delta Chapter runs every meeting through HermeΣ — summaries, action items, and
+        calendar updates, hands-free. Read how it started.
+      </p>
+      <div class="reveal reveal-d3">
+        <Button href="/case-study" variant="ghost">Read the Case Study</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TEASER -->
+  <section class="bg-navy-mid px-6 py-24 md:px-12" aria-labelledby="pricing-teaser-title">
+    <div class="mx-auto w-full max-w-4xl text-center">
+      <SectionLabel class="reveal justify-center">Pricing</SectionLabel>
+      <h2 id="pricing-teaser-title" class="reveal reveal-d1 font-display mb-6 text-[clamp(36px,5vw,56px)] leading-none tracking-[3px] text-white">
+        Simple, <em class="text-gold not-italic">per-chapter</em> pricing.
+      </h2>
+      <p class="reveal reveal-d2 text-cream-dim mx-auto mb-10 max-w-xl text-[15px] leading-relaxed">
+        Plans built for chapter budgets — no contracts, cancel anytime. Council and national
+        deployments available.
+      </p>
+      <div class="reveal reveal-d3">
+        <Button href="/pricing">View Pricing</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="bg-grid relative overflow-hidden px-6 py-28 text-center md:px-12" aria-labelledby="cta-title">
+    <div class="glow-gold pointer-events-none absolute -bottom-52 -left-52 h-[700px] w-[700px]" aria-hidden="true"></div>
+    <h2 id="cta-title" class="reveal font-display mb-6 text-[clamp(48px,8vw,90px)] leading-none tracking-[4px] text-white">
+      Ready to <span class="text-gold">elevate</span><br />the chapter?
+    </h2>
+    <p class="reveal reveal-d1 font-serif text-cream-dim mx-auto mb-10 max-w-xl text-xl font-light italic">
+      HermeΣ doesn't replace your members — it frees them to do more of what actually matters.
+    </p>
+    <div class="reveal reveal-d2 flex flex-wrap justify-center gap-4">
+      <Button href="/demo">Book a Demo</Button>
+      <Button href="/pricing" variant="ghost">See Pricing</Button>
+    </div>
+  </section>
+</BaseLayout>

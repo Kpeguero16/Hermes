@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import FaqItem from "../components/FaqItem.astro";
+import { SITE } from "../config";
+---
+
+<BaseLayout
+  title="FAQ — HermeΣ"
+  description="Frequently asked questions about HermeΣ — setup, requirements, data privacy, accuracy, billing, and support for Greek chapter automation."
+>
+  <section class="bg-grid px-6 pt-20 pb-16 text-center md:px-12">
+    <p class="fade-up text-gold mb-5 text-xs font-medium tracking-[5px] uppercase">FAQ</p>
+    <h1 class="fade-up fade-up-d1 font-display text-[clamp(48px,8vw,84px)] leading-none tracking-[4px] text-white">
+      Questions, <span class="text-gold">answered.</span>
+    </h1>
+  </section>
+
+  <section class="px-6 pb-24 md:px-12" aria-label="Frequently asked questions">
+    <div class="mx-auto flex w-full max-w-3xl flex-col gap-4">
+      <FaqItem question="What does my chapter need to use HermeΣ?" class="reveal">
+        Two things you almost certainly already have: a Slack workspace and a Google Calendar.
+        HermeΣ plugs into both during onboarding — there's no new app for your members to download
+        or learn.
+      </FaqItem>
+
+      <FaqItem question="How long does setup take?" class="reveal">
+        Setup happens during a single onboarding call. We connect your minutes channel and your
+        chapter calendar, run a test PDF together, and you're live — typically the same week you
+        sign up.
+      </FaqItem>
+
+      <FaqItem question="Do members have to change how they work?" class="reveal">
+        No. The only "step" is one your chapter already does: posting the meeting-minutes PDF to
+        Slack. Everything after that — the summary, the action items, the calendar updates — is
+        automatic.
+      </FaqItem>
+
+      <FaqItem question="What format do our minutes need to be in?" class="reveal">
+        PDF is the supported format today. HermeΣ works with the minutes your secretary already
+        produces — there's no required template, though consistent formatting makes extraction even
+        sharper.
+      </FaqItem>
+
+      <FaqItem question="What happens to our data? Who can see our minutes?" class="reveal">
+        HermeΣ only reads the specific channel you designate — nothing else in your workspace. Your
+        minutes are processed solely to generate your chapter's summaries and calendar events.
+        They're never sold and never used for anything beyond serving your chapter. See our
+        <a href="/privacy" class="text-gold underline underline-offset-2">Privacy Policy</a> for
+        the full picture.
+      </FaqItem>
+
+      <FaqItem question="What if the AI gets something wrong?" class="reveal">
+        Summaries post to Slack where the whole chapter can see them, so anything off gets caught
+        immediately — and calendar events are normal Google Calendar events anyone with access can
+        edit. In practice, clear minutes produce highly accurate output, and accuracy improves as
+        your format stays consistent.
+      </FaqItem>
+
+      <FaqItem question="How does billing work?" class="reveal">
+        One flat price per chapter, billed monthly — no per-member fees and no long-term contract.
+        Cancel anytime. Semester billing is also available, which many chapters find easier to run
+        through their budget. See <a href="/pricing" class="text-gold underline underline-offset-2">pricing</a>.
+      </FaqItem>
+
+      <FaqItem question="Can our council or national organization deploy HermeΣ across chapters?" class="reveal">
+        Yes — that's the Council &amp; Nationals plan: multi-chapter deployment with centralized
+        administration and dedicated support. <a href="/demo" class="text-gold underline underline-offset-2">Contact us</a>
+        and we'll scope it together.
+      </FaqItem>
+
+      <FaqItem question="What support do we get?" class="reveal">
+        Every plan includes email support. Chapter Plus adds priority response and a white-glove
+        onboarding call. Either way, you can always reach us at
+        <a href={`mailto:${SITE.contactEmail}`} class="text-gold underline underline-offset-2">{SITE.contactEmail}</a>.
+      </FaqItem>
+    </div>
+  </section>
+
+  <section class="bg-navy-mid px-6 py-24 text-center md:px-12">
+    <h2 class="reveal font-display mb-6 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
+      Still curious? <span class="text-gold">Ask us live.</span>
+    </h2>
+    <div class="reveal reveal-d1">
+      <Button href="/demo">Book a Demo</Button>
+    </div>
+  </section>
+</BaseLayout>

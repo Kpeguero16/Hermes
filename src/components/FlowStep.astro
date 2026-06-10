@@ -1,0 +1,31 @@
+---
+interface Props {
+  num: number;
+  title: string;
+  chip: string;
+  last?: boolean;
+  class?: string;
+}
+const { num, title, chip, last = false, class: className = "" } = Astro.props;
+---
+
+<div class={`flex items-stretch gap-6 py-7 ${num > 1 ? "border-gold/10 border-t" : ""} ${className}`}>
+  <div class="flex min-w-14 flex-col items-center">
+    <div
+      class="bg-gold/10 border-gold font-display text-gold flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[1.5px] text-2xl"
+      aria-hidden="true"
+    >
+      {num}
+    </div>
+    {!last && <div class="bg-gold/20 mt-1 min-h-5 w-px flex-1" aria-hidden="true" />}
+  </div>
+  <div class="pt-3">
+    <p class="mb-2 text-lg font-semibold text-white">{title}</p>
+    <p class="text-cream-dim text-sm leading-relaxed"><slot /></p>
+    <span
+      class="bg-gold/10 border-gold/25 text-gold mt-3 inline-block rounded-full border px-3.5 py-1 text-xs tracking-wider"
+    >
+      {chip}
+    </span>
+  </div>
+</div>

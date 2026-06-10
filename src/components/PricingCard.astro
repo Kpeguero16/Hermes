@@ -1,0 +1,47 @@
+---
+import Button from "./Button.astro";
+import type { PricingTier } from "../config";
+
+interface Props {
+  tier: PricingTier;
+  class?: string;
+}
+const { tier, class: className = "" } = Astro.props;
+---
+
+<div
+  class={`relative flex flex-col rounded-2xl border p-8 ${
+    tier.featured
+      ? "bg-navy-card border-gold shadow-[0_0_60px_rgba(201,168,76,0.12)]"
+      : "bg-navy-card border-gold/15"
+  } ${className}`}
+>
+  {
+    tier.featured && (
+      <span class="bg-gold text-navy absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[11px] font-bold tracking-[2px] uppercase">
+        Most Popular
+      </span>
+    )
+  }
+  <p class="font-display text-gold text-3xl tracking-[2px]">{tier.name}</p>
+  <p class="mt-4 flex items-baseline gap-1.5">
+    <span class="font-display text-5xl text-white">{tier.price}</span>
+    {tier.period && <span class="text-cream-dim text-sm">{tier.period}</span>}
+  </p>
+  <p class="text-cream-dim mt-3 text-sm leading-relaxed">{tier.blurb}</p>
+  <ul class="mt-6 mb-8 flex flex-col gap-3">
+    {
+      tier.features.map((f) => (
+        <li class="text-cream-dim flex items-start gap-2.5 text-sm leading-snug">
+          <span class="text-gold mt-px font-bold" aria-hidden="true">
+            ✓
+          </span>
+          {f}
+        </li>
+      ))
+    }
+  </ul>
+  <Button href={tier.cta.href} variant={tier.featured ? "primary" : "ghost"} class="mt-auto text-center">
+    {tier.cta.label}
+  </Button>
+</div>

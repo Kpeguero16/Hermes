@@ -1,0 +1,131 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+import Testimonial from "../components/Testimonial.astro";
+import { CLIENT } from "../config";
+---
+
+<BaseLayout
+  title={`Case Study: ${CLIENT.shortName} — HermeΣ`}
+  description="How the Theta Delta Chapter of Sigma Lambda Beta at Florida International University automated meeting summaries, action items, and calendar updates with HermeΣ."
+>
+  <section class="bg-grid px-6 pt-20 pb-16 md:px-12">
+    <div class="mx-auto w-full max-w-3xl">
+      <p class="fade-up text-gold mb-5 text-xs font-medium tracking-[5px] uppercase">Case Study</p>
+      <h1 class="fade-up fade-up-d1 font-display text-[clamp(44px,7vw,76px)] leading-none tracking-[3px] text-white">
+        How Theta Delta put chapter admin <span class="text-gold">on autopilot.</span>
+      </h1>
+      <p class="fade-up fade-up-d2 text-cream-dim mt-6 text-sm tracking-[2px] uppercase">
+        {CLIENT.fullName}
+      </p>
+    </div>
+  </section>
+
+  <section class="px-6 pb-20 md:px-12" aria-label="Client overview">
+    <div class="mx-auto grid w-full max-w-3xl gap-4 sm:grid-cols-3">
+      {
+        [
+          { label: "Organization", value: CLIENT.org },
+          { label: "Chapter", value: CLIENT.chapter },
+          { label: "Campus", value: CLIENT.school },
+        ].map((item, i) => (
+          <div class={`reveal reveal-d${i + 1} bg-navy-card border-gold/15 rounded-xl border p-5`}>
+            <p class="text-gold mb-2 text-[10px] font-semibold tracking-[3px] uppercase">{item.label}</p>
+            <p class="text-sm leading-snug font-medium text-white">{item.value}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-navy-mid px-6 py-20 md:px-12" aria-labelledby="challenge-title">
+    <div class="mx-auto w-full max-w-2xl">
+      <SectionLabel class="reveal">The Challenge</SectionLabel>
+      <h2 id="challenge-title" class="reveal reveal-d1 font-display mb-8 text-[clamp(32px,4.5vw,48px)] leading-none tracking-[2px] text-white">
+        Volunteer officers, <em class="text-gold not-italic">full-time admin.</em>
+      </h2>
+      <div class="reveal reveal-d2 text-cream-dim flex flex-col gap-5 text-[15px] leading-relaxed">
+        <p>
+          Like most chapters, Theta Delta ran on meeting minutes — PDFs posted to Slack after every
+          chapter meeting. And like most chapters, those PDFs created work instead of clarity: the
+          secretary summarized them by hand, officers re-typed dates into Google Calendar, and
+          members skimmed past the details they'd committed to in the room.
+        </p>
+        <p>
+          Action items slipped. Calendar events showed up late or not at all. The officers most
+          dedicated to the chapter were spending their energy on transcription instead of
+          leadership.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 md:px-12" aria-labelledby="cs-solution-title">
+    <div class="mx-auto w-full max-w-2xl">
+      <SectionLabel class="reveal">The Solution</SectionLabel>
+      <h2 id="cs-solution-title" class="reveal reveal-d1 font-display mb-8 text-[clamp(32px,4.5vw,48px)] leading-none tracking-[2px] text-white">
+        One channel. <em class="text-gold not-italic">Zero extra steps.</em>
+      </h2>
+      <div class="reveal reveal-d2 text-cream-dim flex flex-col gap-5 text-[15px] leading-relaxed">
+        <p>
+          HermeΣ was deployed directly on the tools the chapter already used — no new apps, no
+          migration, no training. The workflow stayed exactly the same: a meeting ends, the minutes
+          PDF goes into the Slack channel.
+        </p>
+        <p>
+          Everything after that became automatic. HermeΣ reads the PDF, posts a structured summary
+          with action items tagged by member, and creates, updates, or removes the matching events
+          on the chapter's shared Google Calendar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-navy-mid px-6 py-20 md:px-12" aria-labelledby="results-title">
+    <div class="mx-auto w-full max-w-3xl">
+      <SectionLabel class="reveal">The Results</SectionLabel>
+      <h2 id="results-title" class="reveal reveal-d1 font-display mb-10 text-[clamp(32px,4.5vw,48px)] leading-none tracking-[2px] text-white">
+        Every meeting, <em class="text-gold not-italic">handled.</em>
+      </h2>
+      {/* TODO: confirm real metrics with the chapter and replace the bracketed values. */}
+      <div class="mb-10 grid gap-4 sm:grid-cols-3">
+        {
+          [
+            { stat: "Every", caption: "meeting summarized — automatically, same day" },
+            { stat: "[X] hrs", caption: "of officer admin time back per week — TODO: confirm" },
+            { stat: "Same-day", caption: "calendar updates after every meeting" },
+          ].map((item, i) => (
+            <div class={`reveal reveal-d${i + 2} bg-navy-card border-gold/15 rounded-xl border p-6 text-center`}>
+              <p class="font-display text-gold text-4xl tracking-[2px]">{item.stat}</p>
+              <p class="text-cream-dim mt-2 text-[13px] leading-snug">{item.caption}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      {/* TODO: replace with the real testimonial quote + attribution from chapter leadership. */}
+      <Testimonial
+        name="[Name — TODO]"
+        role="[Role — e.g. Chapter President]"
+        org={CLIENT.shortName}
+        class="reveal reveal-d5"
+      >
+        [Testimonial from chapter leadership goes here — the owner has this on hand. Two or three
+        sentences about what changed after HermeΣ went live.]
+      </Testimonial>
+    </div>
+  </section>
+
+  <section class="px-6 py-24 text-center md:px-12">
+    <h2 class="reveal font-display mb-6 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
+      Your chapter <span class="text-gold">could be next.</span>
+    </h2>
+    <p class="reveal reveal-d1 font-serif text-cream-dim mx-auto mb-10 max-w-lg text-lg font-light italic">
+      Twenty minutes, one real meeting PDF, and you'll see exactly what Theta Delta sees.
+    </p>
+    <div class="reveal reveal-d2">
+      <Button href="/demo">Book a Demo</Button>
+    </div>
+  </section>
+</BaseLayout>

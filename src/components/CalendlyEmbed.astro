@@ -1,0 +1,32 @@
+---
+/**
+ * Inline Calendly scheduler, themed to match the site.
+ * Renders only when SITE.calendlyUrl is set in src/config.ts — otherwise shows
+ * a graceful fallback pointing visitors at the request form.
+ */
+import { SITE } from "../config";
+
+const themed = SITE.calendlyUrl
+  ? `${SITE.calendlyUrl}?hide_gdpr_banner=1&background_color=0a0e1a&text_color=f5f0e8&primary_color=c9a84c`
+  : "";
+---
+
+{
+  themed ? (
+    <>
+      <div
+        class="calendly-inline-widget border-gold/20 overflow-hidden rounded-2xl border"
+        data-url={themed}
+        style="min-width:320px;height:700px;"
+      />
+      <script is:inline src="https://assets.calendly.com/assets/external/widget.js" async />
+    </>
+  ) : (
+    <div class="bg-navy-card border-gold/20 rounded-2xl border border-dashed p-10 text-center">
+      <p class="font-display text-gold text-2xl tracking-[2px]">Live scheduling coming soon</p>
+      <p class="text-cream-dim mx-auto mt-3 max-w-md text-sm leading-relaxed">
+        Use the request form below and we'll reply within one business day to set up your demo.
+      </p>
+    </div>
+  )
+}

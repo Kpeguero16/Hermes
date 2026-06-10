@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../config";
+
+// TODO: have this reviewed (and the effective date + governing state confirmed)
+// before launch. This is a working draft, not legal advice.
+const effectiveDate = "June 2026";
+---
+
+<BaseLayout
+  title="Terms of Service — HermeΣ"
+  description="The terms that govern use of HermeΣ and the usehermes.online website."
+>
+  <section class="px-6 pt-20 pb-24 md:px-12">
+    <div class="prose-hermes mx-auto w-full max-w-2xl">
+      <p class="text-gold mb-4 text-xs font-medium tracking-[5px] uppercase">Legal</p>
+      <h1 class="font-display mb-2 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
+        Terms of Service
+      </h1>
+      <p class="text-cream-dim mb-10 text-sm">Effective: {effectiveDate}</p>
+
+      <p>
+        These terms govern your use of the HermeΣ website and service provided by
+        {SITE.legalEntity} ("we," "us"). By using the site or the service, you agree to them.
+      </p>
+
+      <h2>The service</h2>
+      <p>
+        HermeΣ is an automation service for chapter organizations: it processes meeting-minutes
+        documents posted to a designated Slack channel and produces summaries, action items, and
+        Google Calendar updates. Features may vary by plan.
+      </p>
+
+      <h2>Accounts and subscriptions</h2>
+      <ul>
+        <li>Subscriptions are billed per chapter on the schedule shown at signup.</li>
+        <li>You can cancel anytime; service continues through the end of the paid period.</li>
+        <li>Prices may change with advance notice — never mid-billing-period.</li>
+      </ul>
+
+      <h2>Your content</h2>
+      <p>
+        Your chapter's documents and data remain yours. You grant us only the limited rights needed
+        to process them and deliver the service. You're responsible for having the authority to
+        connect your chapter's Slack workspace and Google Calendar.
+      </p>
+
+      <h2>Acceptable use</h2>
+      <p>
+        Don't misuse the service — including attempting to access other chapters' data, reverse
+        engineering the service, or using it for unlawful purposes.
+      </p>
+
+      <h2>AI-generated output</h2>
+      <p>
+        Summaries and calendar events are generated automatically from your documents. They're
+        designed to be accurate, but you should review outputs that matter — we don't guarantee
+        that every extraction is error-free.
+      </p>
+
+      <h2>Disclaimers and liability</h2>
+      <p>
+        The service is provided "as is" without warranties of any kind. To the maximum extent
+        permitted by law, our total liability for any claim is limited to the amounts you paid us
+        in the twelve months before the claim arose.
+      </p>
+
+      <h2>Termination</h2>
+      <p>
+        We may suspend or end service for violation of these terms. You may stop using the service
+        at any time; on request we'll delete your chapter's content per our
+        <a href="/privacy">Privacy Policy</a>.
+      </p>
+
+      <h2>Governing law</h2>
+      <p>
+        These terms are governed by the laws of the State of Florida. {/* TODO: confirm state */}
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about these terms: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

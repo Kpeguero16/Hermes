@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+import GodCard from "../components/GodCard.astro";
+import { CLIENT } from "../config";
+---
+
+<BaseLayout
+  title="About — HermeΣ"
+  description="HermeΣ was born in a chapter room at Florida International University. Our mission: give Greek organizations their volunteer time back by automating chapter admin."
+>
+  <section class="bg-grid px-6 pt-20 pb-16 text-center md:px-12">
+    <p class="fade-up text-gold mb-5 text-xs font-medium tracking-[5px] uppercase">Our Story</p>
+    <h1 class="fade-up fade-up-d1 font-display text-[clamp(48px,8vw,84px)] leading-none tracking-[4px] text-white">
+      Born in a <span class="text-gold">chapter room.</span>
+    </h1>
+  </section>
+
+  <section class="px-6 pb-24 md:px-12" aria-label="Origin story">
+    <div class="font-serif mx-auto flex w-full max-w-2xl flex-col gap-6 text-[21px] leading-relaxed font-light">
+      <p class="reveal">
+        HermeΣ didn't start in an accelerator or a boardroom. It started at
+        <strong class="text-gold font-normal">{CLIENT.school}</strong>, watching chapter officers
+        do the same thing after every single meeting: summarize the minutes by hand, chase members
+        about action items, and update a calendar that was already out of date.
+      </p>
+      <p class="reveal">
+        The people doing that work are volunteers. Students. Brothers and sisters who signed up to
+        build community, run philanthropy, and lead — not to be unpaid administrative staff. The
+        admin wasn't a character flaw. It was a missing system.
+      </p>
+      <p class="reveal">
+        So we built the system. The first version of HermeΣ went live with
+        <strong class="text-gold font-normal">{CLIENT.fullName}</strong> — and it's been running
+        their meetings ever since. Minutes in, summaries out, calendar synced, nobody chasing
+        anybody.
+      </p>
+      <p class="reveal">
+        Today our mission is simple: <strong class="text-gold font-normal">give Greek
+        organizations their time back.</strong> Every hour HermeΣ saves an officer is an hour that
+        goes back into brotherhood, sisterhood, service, and the reasons chapters exist in the
+        first place.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-navy-mid px-6 py-24 md:px-12" aria-labelledby="name-title">
+    <div class="mx-auto grid w-full max-w-5xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <SectionLabel class="reveal">The Name</SectionLabel>
+        <h2 id="name-title" class="reveal reveal-d1 font-display mb-8 text-[clamp(36px,5vw,56px)] leading-none tracking-[3px] text-white">
+          Why a <em class="text-gold not-italic">Greek god?</em>
+        </h2>
+        <div class="reveal reveal-d2 font-serif flex flex-col gap-5 text-lg leading-relaxed font-light">
+          <p>
+            Hermes was the messenger of the gods — the one who carried word swiftly and reliably,
+            cleared the path forward, and never stopped moving.
+          </p>
+          <p>
+            That's exactly the job this product does for your chapter. And the sigma at the end?
+            That's for you. If anyone should understand Greek organizations, it's an actual Greek
+            god.
+          </p>
+        </div>
+      </div>
+      <div class="reveal reveal-d3">
+        <GodCard />
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-24 md:px-12" aria-labelledby="founder-title">
+    <div class="mx-auto w-full max-w-2xl">
+      <SectionLabel class="reveal">The Founder</SectionLabel>
+      <h2 id="founder-title" class="reveal reveal-d1 font-display mb-8 text-[clamp(36px,5vw,56px)] leading-none tracking-[3px] text-white">
+        Built by someone <em class="text-gold not-italic">who lived it.</em>
+      </h2>
+      {/* TODO: replace with the real founder bio + full name (and optionally a photo). */}
+      <p class="reveal reveal-d2 text-cream-dim text-[15px] leading-relaxed">
+        HermeΣ was founded by Khalil — a builder who watched chapter officers burn out on admin
+        work and decided the fix should be automated, not delegated. [TODO: founder full name,
+        title, and a short 2–3 sentence bio.]
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-navy-mid px-6 py-24 text-center md:px-12">
+    <h2 class="reveal font-display mb-6 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
+      The vision: <span class="text-gold">every chapter.</span>
+    </h2>
+    <p class="reveal reveal-d1 font-serif text-cream-dim mx-auto mb-10 max-w-xl text-lg font-light italic">
+      One chapter at FIU today. Every Greek organization in the country tomorrow. Yours could be
+      next.
+    </p>
+    <div class="reveal reveal-d2 flex flex-wrap justify-center gap-4">
+      <Button href="/demo">Book a Demo</Button>
+      <Button href="/case-study" variant="ghost">Read the Case Study</Button>
+    </div>
+  </section>
+</BaseLayout>

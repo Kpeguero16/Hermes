@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+---
+
+<BaseLayout title="Request Received — HermeΣ" index={false}>
+  <section class="bg-grid flex min-h-[70vh] flex-col items-center justify-center px-6 py-24 text-center md:px-12">
+    <div class="bg-gold/10 border-gold/40 mb-8 flex h-20 w-20 items-center justify-center rounded-full border-2 text-4xl" aria-hidden="true">
+      ⚡
+    </div>
+    <h1 class="font-display text-[clamp(44px,7vw,76px)] leading-none tracking-[4px] text-white">
+      Message <span class="text-gold">delivered.</span>
+    </h1>
+    <p class="font-serif text-cream-dim mt-6 max-w-md text-xl font-light italic">
+      The messenger god has your request. We'll be in touch within one business day.
+    </p>
+    <div class="mt-10">
+      <Button href="/">Back to Home</Button>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+import { SITE } from "../config";
+
+const year = new Date().getFullYear();
+const product = [
+  { label: "How It Works", href: "/#how" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "FAQ", href: "/faq" },
+];
+const company = [
+  { label: "About", href: "/about" },
+  { label: "Case Study", href: "/case-study" },
+  { label: "Book a Demo", href: "/demo" },
+];
+const legal = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+];
+---
+
+<footer class="border-gold/10 bg-navy-mid border-t px-6 py-14 md:px-12">
+  <div class="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-4">
+    <div>
+      <a href="/" class="flex items-center gap-3" aria-label="HermeΣ home">
+        <img src="/logo.svg" alt="" width="32" height="32" class="rounded-full" />
+        <span class="font-display text-gold text-xl tracking-[3px]">HermeΣ</span>
+      </a>
+      <p class="text-cream-dim mt-4 text-sm leading-relaxed">
+        Your chapter's messenger god — automating the work no member should have to do.
+      </p>
+    </div>
+
+    {
+      [
+        { title: "Product", items: product },
+        { title: "Company", items: company },
+        { title: "Legal", items: legal },
+      ].map((col) => (
+        <nav aria-label={col.title}>
+          <p class="text-gold mb-4 text-[11px] font-semibold tracking-[3px] uppercase">{col.title}</p>
+          <ul class="flex flex-col gap-2.5">
+            {col.items.map((l) => (
+              <li>
+                <a href={l.href} class="text-cream-dim hover:text-gold text-sm transition-colors">
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+
+  <div
+    class="border-gold/10 text-cream-dim mx-auto mt-12 flex w-full max-w-5xl flex-col items-start justify-between gap-3 border-t pt-6 text-[13px] sm:flex-row sm:items-center"
+  >
+    <span>© {year} {SITE.legalEntity}. All rights reserved.</span>
+    <a href={`mailto:${SITE.contactEmail}`} class="hover:text-gold transition-colors">
+      {SITE.contactEmail}
+    </a>
+  </div>
+</footer>

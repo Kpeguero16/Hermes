@@ -1,0 +1,19 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  class?: string;
+}
+const { number, title, class: className = "" } = Astro.props;
+---
+
+<div
+  class={`bg-navy-card border-gold/15 hover:border-gold/50 relative overflow-hidden rounded-xl border p-7 transition-all duration-300 hover:-translate-y-1 ${className}`}
+>
+  <span
+    class="from-gold absolute top-0 right-0 left-0 h-[3px] bg-gradient-to-r to-transparent"
+    aria-hidden="true"></span>
+  <p class="font-display text-gold/15 mb-3 text-[56px] leading-none">{number}</p>
+  <p class="mb-3 font-semibold text-white">{title}</p>
+  <p class="text-cream-dim text-sm leading-relaxed"><slot /></p>
+</div>

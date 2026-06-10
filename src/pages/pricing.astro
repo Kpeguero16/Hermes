@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+import PricingCard from "../components/PricingCard.astro";
+import FaqItem from "../components/FaqItem.astro";
+import { PRICING } from "../config";
+---
+
+<BaseLayout
+  title="Pricing — HermeΣ"
+  description="Simple per-chapter pricing for HermeΣ. Plans built for chapter budgets — no contracts, cancel anytime. Council and national deployments available."
+>
+  <section class="bg-grid px-6 pt-20 pb-16 text-center md:px-12">
+    <p class="fade-up text-gold mb-5 text-xs font-medium tracking-[5px] uppercase">Pricing</p>
+    <h1 class="fade-up fade-up-d1 font-display text-[clamp(48px,8vw,84px)] leading-none tracking-[4px] text-white">
+      Built for <span class="text-gold">chapter budgets.</span>
+    </h1>
+    <p class="fade-up fade-up-d2 font-serif text-cream-dim mx-auto mt-6 max-w-xl text-xl font-light italic">
+      One flat price per chapter. No contracts, no per-member fees, cancel anytime.
+    </p>
+  </section>
+
+  <section class="px-6 pb-24 md:px-12" aria-label="Plans">
+    <div class="mx-auto grid w-full max-w-5xl items-stretch gap-8 pt-6 lg:grid-cols-3">
+      {PRICING.tiers.map((tier, i) => <PricingCard tier={tier} class={`reveal reveal-d${i + 1}`} />)}
+    </div>
+    <p class="text-cream-dim mx-auto mt-10 max-w-2xl text-center text-sm">
+      {PRICING.billingNote}
+    </p>
+  </section>
+
+  <section class="bg-navy-mid px-6 py-24 md:px-12" aria-labelledby="pricing-faq-title">
+    <div class="mx-auto w-full max-w-3xl">
+      <SectionLabel class="reveal">Common Questions</SectionLabel>
+      <h2 id="pricing-faq-title" class="reveal reveal-d1 font-display mb-10 text-[clamp(36px,5vw,56px)] leading-none tracking-[3px] text-white">
+        Before you <em class="text-gold not-italic">ask.</em>
+      </h2>
+      <div class="flex flex-col gap-4">
+        <FaqItem question="Is the price really per chapter, not per member?" class="reveal reveal-d2">
+          Yes. One flat monthly price covers your entire chapter, whether you have 20 members or
+          200. No per-seat math, no surprises when your new member class crosses.
+        </FaqItem>
+        <FaqItem question="Can we pay by semester instead of monthly?" class="reveal reveal-d3">
+          Yes — semester billing is available and often easier to run through a chapter budget.
+          Mention it at your demo and we'll set it up.
+        </FaqItem>
+        <FaqItem question="What do we need before starting?" class="reveal reveal-d4">
+          Just a Slack workspace and a Google Calendar — the tools most chapters already use. We
+          handle the rest during onboarding.
+        </FaqItem>
+      </div>
+      <p class="reveal reveal-d5 text-cream-dim mt-8 text-sm">
+        More questions? <a href="/faq" class="text-gold underline underline-offset-2">Read the full FAQ</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="px-6 py-24 text-center md:px-12">
+    <h2 class="reveal font-display mb-6 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
+      See it run on <span class="text-gold">your minutes.</span>
+    </h2>
+    <p class="reveal reveal-d1 font-serif text-cream-dim mx-auto mb-10 max-w-lg text-lg font-light italic">
+      Bring a real meeting PDF to the demo and watch HermeΣ handle it live.
+    </p>
+    <div class="reveal reveal-d2">
+      <Button href="/demo">Book a Demo</Button>
+    </div>
+  </section>
+</BaseLayout>

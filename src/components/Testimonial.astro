@@ -1,0 +1,29 @@
+---
+/**
+ * Testimonial block. Quote text comes from the slot.
+ * TODO: replace the placeholder quote wherever this is used with the real
+ * testimonial from chapter leadership (owner has one — see case-study page).
+ */
+interface Props {
+  name: string;
+  role: string;
+  org: string;
+  class?: string;
+}
+const { name, role, org, class: className = "" } = Astro.props;
+---
+
+<figure
+  class={`bg-navy-card border-gold/20 relative overflow-hidden rounded-2xl border p-8 md:p-10 ${className}`}
+>
+  <span class="from-gold absolute top-0 right-0 left-0 h-[3px] bg-gradient-to-r to-transparent" aria-hidden="true"
+  ></span>
+  <span class="font-serif text-gold/30 absolute top-4 left-6 text-7xl leading-none" aria-hidden="true">"</span>
+  <blockquote class="font-serif text-cream relative pt-6 text-xl leading-relaxed font-light italic md:text-2xl">
+    <slot />
+  </blockquote>
+  <figcaption class="mt-6">
+    <p class="text-gold font-semibold">{name}</p>
+    <p class="text-cream-dim text-sm">{role} · {org}</p>
+  </figcaption>
+</figure>

@@ -1,0 +1,110 @@
+---
+const links = [
+  { label: "How It Works", href: "/#how" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Case Study", href: "/case-study" },
+  { label: "About", href: "/about" },
+  { label: "FAQ", href: "/faq" },
+];
+---
+
+<nav
+  class="border-gold/20 fixed top-0 right-0 left-0 z-100 flex items-center justify-between border-b bg-[rgba(10,14,26,0.92)] px-6 py-4 backdrop-blur-md md:px-12"
+  aria-label="Main"
+>
+  <a href="/" class="flex items-center gap-3" aria-label="HermeΣ home">
+    <img src="/logo.svg" alt="" width="36" height="36" class="rounded-full" />
+    <span class="font-display text-gold text-[22px] tracking-[3px]">HermeΣ</span>
+  </a>
+
+  <ul class="hidden items-center gap-8 lg:flex">
+    {
+      links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class="text-cream-dim hover:text-gold text-[13px] font-medium tracking-wider uppercase transition-colors"
+          >
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
+    <li>
+      <a
+        href="/demo"
+        class="bg-gold text-navy rounded-full px-5 py-2 text-[13px] font-semibold tracking-wider uppercase transition-transform hover:-translate-y-0.5"
+      >
+        Book a Demo
+      </a>
+    </li>
+  </ul>
+
+  <button
+    id="menu-btn"
+    type="button"
+    class="text-gold -mr-1 p-1 lg:hidden"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+    aria-label="Open menu"
+  >
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path class="icon-open" d="M3 6h18M3 12h18M3 18h18"></path>
+      <path class="icon-close hidden" d="M6 6l12 12M18 6L6 18"></path>
+    </svg>
+  </button>
+</nav>
+
+<div
+  id="mobile-menu"
+  hidden
+  class="border-gold/20 fixed top-[69px] right-0 left-0 z-90 border-b bg-[rgba(10,14,26,0.98)] px-6 py-6 backdrop-blur-md lg:hidden"
+>
+  <ul class="flex flex-col gap-5">
+    {
+      links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class="text-cream-dim hover:text-gold block text-sm font-medium tracking-wider uppercase transition-colors"
+          >
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
+    <li class="pt-2">
+      <a
+        href="/demo"
+        class="bg-gold text-navy inline-block rounded-full px-6 py-2.5 text-sm font-semibold tracking-wider uppercase"
+      >
+        Book a Demo
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- Spacer so content clears the fixed nav -->
+<div class="h-[69px]" aria-hidden="true"></div>
+
+<script>
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("mobile-menu");
+
+  function setOpen(open: boolean) {
+    if (!btn || !menu) return;
+    menu.toggleAttribute("hidden", !open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    btn.querySelector(".icon-open")?.classList.toggle("hidden", open);
+    btn.querySelector(".icon-close")?.classList.toggle("hidden", !open);
+  }
+
+  btn?.addEventListener("click", () => setOpen(menu?.hasAttribute("hidden") ?? false));
+  // Close after choosing a link (matters for same-page anchors).
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+</script>
