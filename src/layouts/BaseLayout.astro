@@ -58,6 +58,17 @@ const orgSchema = {
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
+    <!-- Scroll-reveal styles hide content until JS runs; keep everything visible without JS. -->
+    <noscript>
+      <style>
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      </style>
+    </noscript>
+
     <slot name="head" />
   </head>
   <body>

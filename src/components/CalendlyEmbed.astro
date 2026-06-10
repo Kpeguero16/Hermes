@@ -6,9 +6,17 @@
  */
 import { SITE } from "../config";
 
-const themed = SITE.calendlyUrl
-  ? `${SITE.calendlyUrl}?hide_gdpr_banner=1&background_color=0a0e1a&text_color=f5f0e8&primary_color=c9a84c`
-  : "";
+// Build the themed URL safely whether or not the pasted link already has params.
+// An invalid calendlyUrl fails the build loudly here instead of breaking silently in prod.
+let themed = "";
+if (SITE.calendlyUrl) {
+  const url = new URL(SITE.calendlyUrl);
+  url.searchParams.set("hide_gdpr_banner", "1");
+  url.searchParams.set("background_color", "0a0e1a");
+  url.searchParams.set("text_color", "f5f0e8");
+  url.searchParams.set("primary_color", "c9a84c");
+  themed = url.href;
+}
 ---
 
 {
