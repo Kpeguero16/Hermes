@@ -34,3 +34,7 @@ Search the repo for `TODO:` — the big ones:
 4. Replace `public/logo.svg` / `public/favicon.svg` with the real logo.
 5. Founder bio in `src/pages/about.astro`; legal entity + contact email in `src/config.ts`.
 6. Review `privacy.astro` / `terms.astro` drafts.
+
+## License
+
+The code in this repo is MIT-licensed (see [LICENSE](LICENSE)). The HermeΣ name, logo, and site copy are brand content and are not granted under the code license.

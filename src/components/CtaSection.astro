@@ -1,0 +1,72 @@
+---
+/**
+ * Closing call-to-action section shared by every page.
+ * Title goes in the named slot so pages can mark words gold:
+ *   <Fragment slot="title">Ready to <span class="text-gold">elevate</span>?</Fragment>
+ */
+import Button from "./Button.astro";
+
+interface Props {
+  subtitle?: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  variant?: "plain" | "navy" | "grid";
+  size?: "md" | "lg";
+  headingId?: string;
+}
+
+const {
+  subtitle,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  variant = "plain",
+  size = "md",
+  headingId,
+} = Astro.props;
+
+const bg = {
+  plain: "",
+  navy: "bg-navy-mid",
+  grid: "bg-grid relative overflow-hidden",
+}[variant];
+const heading =
+  size === "lg"
+    ? "text-[clamp(48px,8vw,90px)] tracking-[4px]"
+    : "text-[clamp(40px,6vw,64px)] tracking-[3px]";
+const padding = size === "lg" ? "py-28" : "py-24";
+---
+
+<section class={`px-6 text-center md:px-12 ${padding} ${bg}`} aria-labelledby={headingId}>
+  {
+    variant === "grid" && (
+      <div
+        class="glow-gold pointer-events-none absolute -bottom-52 -left-52 h-[700px] w-[700px]"
+        aria-hidden="true"
+      />
+    )
+  }
+  <h2 id={headingId} class={`reveal font-display relative mb-6 leading-none text-white ${heading}`}>
+    <slot name="title" />
+  </h2>
+  {
+    subtitle && (
+      <p class="reveal reveal-d1 font-serif text-cream-dim relative mx-auto mb-10 max-w-xl text-xl font-light italic">
+        {subtitle}
+      </p>
+    )
+  }
+  <div class="reveal reveal-d2 relative flex flex-wrap justify-center gap-4">
+    <Button href={primaryHref}>{primaryLabel}</Button>
+    {
+      secondaryLabel && secondaryHref && (
+        <Button href={secondaryHref} variant="ghost">
+          {secondaryLabel}
+        </Button>
+      )
+    }
+  </div>
+</section>

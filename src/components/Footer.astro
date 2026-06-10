@@ -56,9 +56,16 @@ const legal = [
   <div
     class="border-gold/10 text-cream-dim mx-auto mt-12 flex w-full max-w-5xl flex-col items-start justify-between gap-3 border-t pt-6 text-[13px] sm:flex-row sm:items-center"
   >
-    <span>© {year} {SITE.legalEntity}. All rights reserved.</span>
+    <span>© <span id="copyright-year">{year}</span> {SITE.legalEntity}. All rights reserved.</span>
     <a href={`mailto:${SITE.contactEmail}`} class="hover:text-gold transition-colors">
       {SITE.contactEmail}
     </a>
   </div>
 </footer>
+
+<script>
+  // The build-time year is the no-JS fallback; keep it current on a site
+  // that may go months between rebuilds.
+  const yearEl = document.getElementById("copyright-year");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+</script>

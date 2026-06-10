@@ -22,6 +22,11 @@
   --font-sans: "DM Sans", sans-serif;
 }
 
+:root {
+  /* Fixed-nav height — referenced by the nav spacer, mobile menu offset, and hero min-height. */
+  --nav-h: 69px;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -7,6 +7,7 @@ import PainCard from "../components/PainCard.astro";
 import FeatureCard from "../components/FeatureCard.astro";
 import FlowStep from "../components/FlowStep.astro";
 import GodCard from "../components/GodCard.astro";
+import CtaSection from "../components/CtaSection.astro";
 import { SITE, CLIENT } from "../config";
 
 const productSchema = {
@@ -28,7 +29,7 @@ const productSchema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 
   <!-- HERO -->
-  <section class="bg-grid relative flex min-h-[calc(100vh-69px)] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center md:px-12">
+  <section class="bg-grid relative flex min-h-[calc(100vh-var(--nav-h))] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center md:px-12">
     <div class="glow-gold pointer-events-none absolute -top-52 -right-52 h-[700px] w-[700px]" aria-hidden="true"></div>
 
     <p class="fade-up text-gold mb-6 text-xs font-medium tracking-[5px] uppercase">
@@ -251,17 +252,16 @@ const productSchema = {
   </section>
 
   <!-- FINAL CTA -->
-  <section class="bg-grid relative overflow-hidden px-6 py-28 text-center md:px-12" aria-labelledby="cta-title">
-    <div class="glow-gold pointer-events-none absolute -bottom-52 -left-52 h-[700px] w-[700px]" aria-hidden="true"></div>
-    <h2 id="cta-title" class="reveal font-display mb-6 text-[clamp(48px,8vw,90px)] leading-none tracking-[4px] text-white">
-      Ready to <span class="text-gold">elevate</span><br />the chapter?
-    </h2>
-    <p class="reveal reveal-d1 font-serif text-cream-dim mx-auto mb-10 max-w-xl text-xl font-light italic">
-      HermeΣ doesn't replace your members — it frees them to do more of what actually matters.
-    </p>
-    <div class="reveal reveal-d2 flex flex-wrap justify-center gap-4">
-      <Button href="/demo">Book a Demo</Button>
-      <Button href="/pricing" variant="ghost">See Pricing</Button>
-    </div>
-  </section>
+  <CtaSection
+    variant="grid"
+    size="lg"
+    headingId="cta-title"
+    subtitle="HermeΣ doesn't replace your members — it frees them to do more of what actually matters."
+    primaryLabel="Book a Demo"
+    primaryHref="/demo"
+    secondaryLabel="See Pricing"
+    secondaryHref="/pricing"
+  >
+    <Fragment slot="title">Ready to <span class="text-gold">elevate</span><br />the chapter?</Fragment>
+  </CtaSection>
 </BaseLayout>

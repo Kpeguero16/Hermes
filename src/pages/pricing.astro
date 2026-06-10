@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Button from "../components/Button.astro";
+import CtaSection from "../components/CtaSection.astro";
 import SectionLabel from "../components/SectionLabel.astro";
 import PricingCard from "../components/PricingCard.astro";
 import FaqItem from "../components/FaqItem.astro";
@@ -56,15 +56,11 @@ import { PRICING } from "../config";
     </div>
   </section>
 
-  <section class="px-6 py-24 text-center md:px-12">
-    <h2 class="reveal font-display mb-6 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
-      See it run on <span class="text-gold">your minutes.</span>
-    </h2>
-    <p class="reveal reveal-d1 font-serif text-cream-dim mx-auto mb-10 max-w-lg text-lg font-light italic">
-      Bring a real meeting PDF to the demo and watch HermeΣ handle it live.
-    </p>
-    <div class="reveal reveal-d2">
-      <Button href="/demo">Book a Demo</Button>
-    </div>
-  </section>
+  <CtaSection
+    subtitle="Bring a real meeting PDF to the demo and watch HermeΣ handle it live."
+    primaryLabel="Book a Demo"
+    primaryHref="/demo"
+  >
+    <Fragment slot="title">See it run on <span class="text-gold">your minutes.</span></Fragment>
+  </CtaSection>
 </BaseLayout>

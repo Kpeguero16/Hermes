@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Button from "../components/Button.astro";
+import CtaSection from "../components/CtaSection.astro";
 import FaqItem from "../components/FaqItem.astro";
 import { SITE } from "../config";
 ---
@@ -77,12 +77,7 @@ import { SITE } from "../config";
     </div>
   </section>
 
-  <section class="bg-navy-mid px-6 py-24 text-center md:px-12">
-    <h2 class="reveal font-display mb-6 text-[clamp(40px,6vw,64px)] leading-none tracking-[3px] text-white">
-      Still curious? <span class="text-gold">Ask us live.</span>
-    </h2>
-    <div class="reveal reveal-d1">
-      <Button href="/demo">Book a Demo</Button>
-    </div>
-  </section>
+  <CtaSection variant="navy" primaryLabel="Book a Demo" primaryHref="/demo">
+    <Fragment slot="title">Still curious? <span class="text-gold">Ask us live.</span></Fragment>
+  </CtaSection>
 </BaseLayout>

@@ -59,7 +59,7 @@ const links = [
 <div
   id="mobile-menu"
   hidden
-  class="border-gold/20 fixed top-[69px] right-0 left-0 z-90 border-b bg-[rgba(10,14,26,0.98)] px-6 py-6 backdrop-blur-md lg:hidden"
+  class="border-gold/20 fixed top-[var(--nav-h)] right-0 left-0 z-90 border-b bg-[rgba(10,14,26,0.98)] px-6 py-6 backdrop-blur-md lg:hidden"
 >
   <ul class="flex flex-col gap-5">
     {
@@ -86,7 +86,7 @@ const links = [
 </div>
 
 <!-- Spacer so content clears the fixed nav -->
-<div class="h-[69px]" aria-hidden="true"></div>
+<div class="h-[var(--nav-h)]" aria-hidden="true"></div>
 
 <script>
   const btn = document.getElementById("menu-btn");
@@ -106,5 +106,10 @@ const links = [
   menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") setOpen(false);
+  });
+  document.addEventListener("click", (e) => {
+    if (!menu || menu.hasAttribute("hidden")) return;
+    const target = e.target as Node;
+    if (!menu.contains(target) && !btn?.contains(target)) setOpen(false);
   });
 </script>
