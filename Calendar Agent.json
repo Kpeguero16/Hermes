@@ -1,0 +1,1078 @@
+{
+  "updatedAt": "2026-07-07T18:10:52.072Z",
+  "createdAt": "2026-07-07T15:34:10.346Z",
+  "id": "GlzWdO0w7zkKLz2Z",
+  "name": "Calendar Agent",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here are the event details:\n{{ $json.title }}\n{{ $json.date }}\n{{ $json.start_time }}\n{{ $json.end_time }}\n{{ $json.status }}\n{{ $json.notes }}\n{{ $json.all_day }}\n{{ $json.timezone }}",
+        "options": {
+          "systemMessage": "=# Role\nYou are a calendar management agent. You receive ONE event at a time and manage the user's Google Calendar using tools only. No explanations, no JSON output, no reasoning text.\n---\n# Current Date\n{{ $now }}\n---\n# Input Format\n- title: string\n- date: YYYY-MM-DD\n- start_time: ISO 8601 or null\n- end_time: ISO 8601 or null\n- all_day: boolean\n- status: confirmed | cancelled | postponed\n- notes: string or null\n- timezone: IANA format (e.g. America/New_York)\n---\n# Deduplication Rules\n- ALWAYS call Get Events before any other tool\n- Search by date range ±3 days around the event date\n- Match by: exact or fuzzy title AND same approximate date\n- Fuzzy title match = same core words, ignore minor wording differences\n  (e.g. \"Chapter Meeting\" ≈ \"Weekly Chapter Meeting\" ≈ \"Theta Delta Meeting\")\n- If a match is found with identical title + date → treat as already processed, skip entirely\n- Only proceed to Action Rules if no duplicate is detected\n---\n# Action Rules\n| status      | action                                      |\n|-------------|---------------------------------------------|\n| confirmed   | match found? Update : Create                |\n| cancelled   | match found? Delete : nothing               |\n| postponed   | match found? Delete : nothing               |\n---\n# Time Rules\n- Use all times exactly as provided — never infer or modify\n- all_day=true OR start_time=null → create as all-day event\n- If start_time exists but end_time is null → assume 1 hour duration (new events only)\n- Always use the provided timezone\n---\n# Execution Rules\n- Get Events is always the FIRST and only required tool call before any action\n- Match events by title (fuzzy) and date\n- If uncertain about a match → do nothing\n- Never output text, JSON, or reasoning — only call tools\n- Each tool may only be called ONCE per session\n- After a tool returns a result, do not call the same tool again\n---\n# Output\n- Ready-to-send Slack message with the calendar updates performed.\n- Make sure to include the event's name, date, start and end time (if applicable)\n- If event was skipped due to deduplication, include it in the message as \"Already on calendar: [title]\""
+        }
+      },
+      "id": "451329e7-30d0-4b17-bd81-deb1705eeff8",
+      "name": "Calendar Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -64,
+        288
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "fiu.slb.president@gmail.com",
+          "mode": "list",
+          "cachedResultName": "fiu.slb.president@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "allday": "={{ $json.all_day }}",
+          "description": "={{ $json.notes }}",
+          "summary": "={{ $json.title }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        528
+      ],
+      "id": "a2b439d1-a50f-4c03-ad53-db492647f995",
+      "name": "Create Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "7TTmCF9Zd0zArQvA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "fiu.slb.president@gmail.com",
+          "mode": "list",
+          "cachedResultName": "fiu.slb.president@gmail.com"
+        },
+        "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        528
+      ],
+      "id": "0c9be270-1d42-4212-a15f-2a4a30d83f46",
+      "name": "Get Events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "7TTmCF9Zd0zArQvA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "fiu.slb.president@gmail.com",
+          "mode": "list",
+          "cachedResultName": "fiu.slb.president@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        128,
+        528
+      ],
+      "id": "7f0d29b1-4ef7-4581-8680-0d3acc5cd101",
+      "name": "Delete Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "7TTmCF9Zd0zArQvA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "fiu.slb.president@gmail.com",
+          "mode": "list",
+          "cachedResultName": "fiu.slb.president@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+          "summary": "={{ $json.title }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        528
+      ],
+      "id": "a5a8919e-7a17-4211-8b0b-7e421a9a3ed4",
+      "name": "Update Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "7TTmCF9Zd0zArQvA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "data",
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1152,
+        192
+      ],
+      "id": "5b68d7ad-f763-47e7-849f-73df637ded86",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        528
+      ],
+      "id": "3e87b6aa-7abb-47f1-9eff-0016913ec2d4",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "2kUNacrQ9rZDOtud",
+          "name": "Hermes main billing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "text": "Extract calendar events from the document.\n\nReturn ONLY raw JSON.\n\nDo NOT include markdown formatting.\nDo NOT include ```json or ``` blocks.\nDo NOT include any explanation.\n\nFormat:\n[\n  {\n    \"title\": \"string\",\n    \"date\": \"YYYY-MM-DD or null\",\n    \"start_time\": \"HH:MM or null\",\n    \"end_time\": \"HH:MM or null\",\n    \"status\": \"confirmed | cancelled | postponed | null\",\n    \"notes\": \"string\"\n  }\n]\n\nRules:\n- Timezone is America/New_York (Eastern Time Zone). All times should be interpreted in this timezone.\n- If no time → leave null\n- If start time is provided but the end time is missing, make the event 1 hour long\n- If no date → leave null\n- Be fuzzy and extract best guesses",
+        "inputType": "binary",
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -928,
+        192
+      ],
+      "id": "f7d94422-e9b6-41ce-bbb2-aaed291fb415",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "2kUNacrQ9rZDOtud",
+          "name": "Hermes main billing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.candidates[0].content.parts[0].text;\n\n// Strip markdown code fences if Gemini wraps output in ```json ... ```\nconst cleaned = raw.replace(/^```json\\s*|```$/gm, \"\").trim();\nconst events = JSON.parse(cleaned);\n\nconst TIMEZONE = \"America/New_York\";\n\nfunction getEasternOffset(dateStr, timeStr) {\n  // Create a date in UTC and check what offset NY would be at that moment\n  const dt = new Date(`${dateStr}T${timeStr}:00Z`);\n  \n  // Use Intl to determine what time NY thinks it is at this UTC moment\n  const nyTime = new Intl.DateTimeFormat(\"en-US\", {\n    timeZone: TIMEZONE,\n    year: \"numeric\", month: \"2-digit\", day: \"2-digit\",\n    hour: \"2-digit\", minute: \"2-digit\", second: \"2-digit\",\n    hour12: false\n  }).formatToParts(dt);\n\n  const get = type => nyTime.find(p => p.type === type).value;\n  const nyUTC = new Date(`${get(\"year\")}-${get(\"month\")}-${get(\"day\")}T${get(\"hour\") === \"24\" ? \"00\" : get(\"hour\")}:${get(\"minute\")}:${get(\"second\")}Z`);\n\n  const offsetMinutes = (nyUTC - dt) / 60000;\n  const sign = offsetMinutes >= 0 ? \"+\" : \"-\";\n  const abs = Math.abs(offsetMinutes);\n  const hh = String(Math.floor(abs / 60)).padStart(2, \"0\");\n  const mm = String(abs % 60).padStart(2, \"0\");\n  return `${sign}${hh}:${mm}`;\n}\n\nfunction toNYISO(date, time) {\n  if (!time) return null;\n  const offset = getEasternOffset(date, time);\n  return `${date}T${time}:00${offset}`;\n}\n\nreturn events.map(event => {\n  const isAllDay = !event.start_time && !event.end_time;\n  return {\n    json: {\n      ...event,\n      all_day: isAllDay,\n      start_time: isAllDay ? null : toNYISO(event.date, event.start_time),\n      end_time:   isAllDay ? null : toNYISO(event.date, event.end_time),\n      timezone: TIMEZONE\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        192
+      ],
+      "id": "61d6f93f-8cae-4065-84ed-13bb3c1eb1e2",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7ab380a2-a8d3-421c-ab4e-748ea8fb7904",
+              "name": "response",
+              "value": "Unable to perform task. Please try again.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a7b98f75-af54-4eef-b52e-c33e739bd8ca",
+      "name": "Try Again",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -480,
+        192
+      ],
+      "id": "f05cfc68-2d27-4703-8b27-71e8d258a414",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C06Q63STKEH",
+          "mode": "list",
+          "cachedResultName": "chapter-meetings"
+        },
+        "text": "={{ $json.content.parts[0].text }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false,
+          "thread_ts": {
+            "replyValues": {
+              "thread_ts": "={{ $('When Executed by Another Workflow').item.json.files[0].timestamp }}"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        816,
+        0
+      ],
+      "id": "8c7a3e97-af90-46ce-8039-b8a4879ec10b",
+      "name": "Send a message",
+      "webhookId": "ee1862b4-11d4-4681-b47e-c793737d0391",
+      "credentials": {
+        "slackApi": {
+          "id": "QednMfSxt8oWBSXs",
+          "name": "Theta Delta"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e04fe130-6fc0-4c1f-8649-6fc6853876ba",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=# Output\nAfter all tool calls are complete, output ONLY a single Slack message.\nNo preamble, no options, no commentary — just the message.\n\nBased on: {{ $json.output }}\n\nFormat:\n*📅 HermeΣ Calendar Update*\n\nUse this structure for each action taken:\n- ✅ *Created* — [title] on [date]\n- ✏️ *Updated* — [title] on [date]\n- 🗑️ *Deleted* — [title] on [date]\n- ⏭️ *Skipped* — [title] on [date] (already on calendar)\n\nIf no changes were made: \"No calendar changes were needed.\""
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        0
+      ],
+      "id": "b0d4fcf0-e9b9-4e2f-a079-d8fdb3efa6ef",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "2kUNacrQ9rZDOtud",
+          "name": "Hermes main billing"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Calendar Agent": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Try Again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "8b036aee-ae5b-4c7d-b8d5-fe9a4775f551",
+  "activeVersionId": "34bdeea4-ff97-4816-8049-bcfdab6be4b0",
+  "versionCounter": 24,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-07-07T15:34:10.347Z",
+      "createdAt": "2026-07-07T15:34:10.347Z",
+      "role": "workflow:owner",
+      "workflowId": "GlzWdO0w7zkKLz2Z",
+      "projectId": "Z0UW9jofkROFcmCs",
+      "project": {
+        "updatedAt": "2026-07-07T13:44:54.745Z",
+        "createdAt": "2026-07-07T13:38:25.572Z",
+        "id": "Z0UW9jofkROFcmCs",
+        "name": "Khalil Peguero <gethermesapp@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "ba061434-2599-4a14-aea4-95560a68fb7d"
+      }
+    }
+  ],
+  "tags": [],
+  "parentFolder": {
+    "updatedAt": "2026-07-07T15:31:25.609Z",
+    "createdAt": "2026-07-07T15:31:25.609Z",
+    "id": "t59vAbwO2oyxHdhz",
+    "name": "Theta Delta",
+    "parentFolderId": null
+  },
+  "activeVersion": {
+    "updatedAt": "2026-07-07T18:08:49.000Z",
+    "createdAt": "2026-07-07T18:07:05.202Z",
+    "versionId": "34bdeea4-ff97-4816-8049-bcfdab6be4b0",
+    "workflowId": "GlzWdO0w7zkKLz2Z",
+    "nodes": [
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Here are the event details:\n{{ $json.title }}\n{{ $json.date }}\n{{ $json.start_time }}\n{{ $json.end_time }}\n{{ $json.status }}\n{{ $json.notes }}\n{{ $json.all_day }}\n{{ $json.timezone }}",
+          "options": {
+            "systemMessage": "=# Role\nYou are a calendar management agent. You receive ONE event at a time and manage the user's Google Calendar using tools only. No explanations, no JSON output, no reasoning text.\n---\n# Current Date\n{{ $now }}\n---\n# Input Format\n- title: string\n- date: YYYY-MM-DD\n- start_time: ISO 8601 or null\n- end_time: ISO 8601 or null\n- all_day: boolean\n- status: confirmed | cancelled | postponed\n- notes: string or null\n- timezone: IANA format (e.g. America/New_York)\n---\n# Deduplication Rules\n- ALWAYS call Get Events before any other tool\n- Search by date range ±3 days around the event date\n- Match by: exact or fuzzy title AND same approximate date\n- Fuzzy title match = same core words, ignore minor wording differences\n  (e.g. \"Chapter Meeting\" ≈ \"Weekly Chapter Meeting\" ≈ \"Theta Delta Meeting\")\n- If a match is found with identical title + date → treat as already processed, skip entirely\n- Only proceed to Action Rules if no duplicate is detected\n---\n# Action Rules\n| status      | action                                      |\n|-------------|---------------------------------------------|\n| confirmed   | match found? Update : Create                |\n| cancelled   | match found? Delete : nothing               |\n| postponed   | match found? Delete : nothing               |\n---\n# Time Rules\n- Use all times exactly as provided — never infer or modify\n- all_day=true OR start_time=null → create as all-day event\n- If start_time exists but end_time is null → assume 1 hour duration (new events only)\n- Always use the provided timezone\n---\n# Execution Rules\n- Get Events is always the FIRST and only required tool call before any action\n- Match events by title (fuzzy) and date\n- If uncertain about a match → do nothing\n- Never output text, JSON, or reasoning — only call tools\n- Each tool may only be called ONCE per session\n- After a tool returns a result, do not call the same tool again\n---\n# Output\n- Ready-to-send Slack message with the calendar updates performed.\n- Make sure to include the event's name, date, start and end time (if applicable)\n- If event was skipped due to deduplication, include it in the message as \"Already on calendar: [title]\""
+          }
+        },
+        "id": "451329e7-30d0-4b17-bd81-deb1705eeff8",
+        "name": "Calendar Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.6,
+        "position": [
+          -64,
+          288
+        ],
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "calendar": {
+            "__rl": true,
+            "value": "fiu.slb.president@gmail.com",
+            "mode": "list",
+            "cachedResultName": "fiu.slb.president@gmail.com"
+          },
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "additionalFields": {
+            "allday": "={{ $json.all_day }}",
+            "description": "={{ $json.notes }}",
+            "summary": "={{ $json.title }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          -128,
+          528
+        ],
+        "id": "a2b439d1-a50f-4c03-ad53-db492647f995",
+        "name": "Create Event",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "7TTmCF9Zd0zArQvA",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "fiu.slb.president@gmail.com",
+            "mode": "list",
+            "cachedResultName": "fiu.slb.president@gmail.com"
+          },
+          "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+          "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+          "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          0,
+          528
+        ],
+        "id": "0c9be270-1d42-4212-a15f-2a4a30d83f46",
+        "name": "Get Events",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "7TTmCF9Zd0zArQvA",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "calendar": {
+            "__rl": true,
+            "value": "fiu.slb.president@gmail.com",
+            "mode": "list",
+            "cachedResultName": "fiu.slb.president@gmail.com"
+          },
+          "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          128,
+          528
+        ],
+        "id": "7f0d29b1-4ef7-4581-8680-0d3acc5cd101",
+        "name": "Delete Event",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "7TTmCF9Zd0zArQvA",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "calendar": {
+            "__rl": true,
+            "value": "fiu.slb.president@gmail.com",
+            "mode": "list",
+            "cachedResultName": "fiu.slb.president@gmail.com"
+          },
+          "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+          "updateFields": {
+            "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+            "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+            "summary": "={{ $json.title }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          256,
+          528
+        ],
+        "id": "a5a8919e-7a17-4211-8b0b-7e421a9a3ed4",
+        "name": "Update Event",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "7TTmCF9Zd0zArQvA",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "data",
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -1152,
+          192
+        ],
+        "id": "5b68d7ad-f763-47e7-849f-73df637ded86",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.5-pro",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1.1,
+        "position": [
+          -256,
+          528
+        ],
+        "id": "3e87b6aa-7abb-47f1-9eff-0016913ec2d4",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "2kUNacrQ9rZDOtud",
+            "name": "Hermes main billing"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "document",
+          "modelId": {
+            "__rl": true,
+            "value": "models/gemini-flash-lite-latest",
+            "mode": "list",
+            "cachedResultName": "models/gemini-flash-lite-latest"
+          },
+          "text": "Extract calendar events from the document.\n\nReturn ONLY raw JSON.\n\nDo NOT include markdown formatting.\nDo NOT include ```json or ``` blocks.\nDo NOT include any explanation.\n\nFormat:\n[\n  {\n    \"title\": \"string\",\n    \"date\": \"YYYY-MM-DD or null\",\n    \"start_time\": \"HH:MM or null\",\n    \"end_time\": \"HH:MM or null\",\n    \"status\": \"confirmed | cancelled | postponed | null\",\n    \"notes\": \"string\"\n  }\n]\n\nRules:\n- Timezone is America/New_York (Eastern Time Zone). All times should be interpreted in this timezone.\n- If no time → leave null\n- If start time is provided but the end time is missing, make the event 1 hour long\n- If no date → leave null\n- Be fuzzy and extract best guesses",
+          "inputType": "binary",
+          "simplify": false,
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.googleGemini",
+        "typeVersion": 1.2,
+        "position": [
+          -928,
+          192
+        ],
+        "id": "f7d94422-e9b6-41ce-bbb2-aaed291fb415",
+        "name": "Analyze document",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "2kUNacrQ9rZDOtud",
+            "name": "Hermes main billing"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const raw = $input.first().json.candidates[0].content.parts[0].text;\n\n// Strip markdown code fences if Gemini wraps output in ```json ... ```\nconst cleaned = raw.replace(/^```json\\s*|```$/gm, \"\").trim();\nconst events = JSON.parse(cleaned);\n\nconst TIMEZONE = \"America/New_York\";\n\nfunction getEasternOffset(dateStr, timeStr) {\n  // Create a date in UTC and check what offset NY would be at that moment\n  const dt = new Date(`${dateStr}T${timeStr}:00Z`);\n  \n  // Use Intl to determine what time NY thinks it is at this UTC moment\n  const nyTime = new Intl.DateTimeFormat(\"en-US\", {\n    timeZone: TIMEZONE,\n    year: \"numeric\", month: \"2-digit\", day: \"2-digit\",\n    hour: \"2-digit\", minute: \"2-digit\", second: \"2-digit\",\n    hour12: false\n  }).formatToParts(dt);\n\n  const get = type => nyTime.find(p => p.type === type).value;\n  const nyUTC = new Date(`${get(\"year\")}-${get(\"month\")}-${get(\"day\")}T${get(\"hour\") === \"24\" ? \"00\" : get(\"hour\")}:${get(\"minute\")}:${get(\"second\")}Z`);\n\n  const offsetMinutes = (nyUTC - dt) / 60000;\n  const sign = offsetMinutes >= 0 ? \"+\" : \"-\";\n  const abs = Math.abs(offsetMinutes);\n  const hh = String(Math.floor(abs / 60)).padStart(2, \"0\");\n  const mm = String(abs % 60).padStart(2, \"0\");\n  return `${sign}${hh}:${mm}`;\n}\n\nfunction toNYISO(date, time) {\n  if (!time) return null;\n  const offset = getEasternOffset(date, time);\n  return `${date}T${time}:00${offset}`;\n}\n\nreturn events.map(event => {\n  const isAllDay = !event.start_time && !event.end_time;\n  return {\n    json: {\n      ...event,\n      all_day: isAllDay,\n      start_time: isAllDay ? null : toNYISO(event.date, event.start_time),\n      end_time:   isAllDay ? null : toNYISO(event.date, event.end_time),\n      timezone: TIMEZONE\n    }\n  };\n});"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -704,
+          192
+        ],
+        "id": "61d6f93f-8cae-4065-84ed-13bb3c1eb1e2",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7ab380a2-a8d3-421c-ab4e-748ea8fb7904",
+                "name": "response",
+                "value": "Unable to perform task. Please try again.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "a7b98f75-af54-4eef-b52e-c33e739bd8ca",
+        "name": "Try Again",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          528,
+          288
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          -480,
+          192
+        ],
+        "id": "f05cfc68-2d27-4703-8b27-71e8d258a414",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "select": "channel",
+          "channelId": {
+            "__rl": true,
+            "value": "C06Q63STKEH",
+            "mode": "list",
+            "cachedResultName": "chapter-meetings"
+          },
+          "text": "={{ $json.content.parts[0].text }}",
+          "otherOptions": {
+            "includeLinkToWorkflow": false,
+            "thread_ts": {
+              "replyValues": {
+                "thread_ts": "={{ $('When Executed by Another Workflow').item.json.files[0].timestamp }}"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.slack",
+        "typeVersion": 2.4,
+        "position": [
+          816,
+          0
+        ],
+        "id": "8c7a3e97-af90-46ce-8039-b8a4879ec10b",
+        "name": "Send a message",
+        "webhookId": "ee1862b4-11d4-4681-b47e-c793737d0391",
+        "credentials": {
+          "slackApi": {
+            "id": "QednMfSxt8oWBSXs",
+            "name": "Theta Delta"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldsToAggregate": {
+            "fieldToAggregate": [
+              {
+                "fieldToAggregate": "output"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "e04fe130-6fc0-4c1f-8649-6fc6853876ba",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "models/gemini-flash-lite-latest",
+            "mode": "list",
+            "cachedResultName": "models/gemini-flash-lite-latest"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "=# Output\nAfter all tool calls are complete, output ONLY a single Slack message.\nNo preamble, no options, no commentary — just the message.\n\nBased on: {{ $json.output }}\n\nFormat:\n*📅 HermeΣ Calendar Update*\n\nUse this structure for each action taken:\n- ✅ *Created* — [title] on [date]\n- ✏️ *Updated* — [title] on [date]\n- 🗑️ *Deleted* — [title] on [date]\n- ⏭️ *Skipped* — [title] on [date] (already on calendar)\n\nIf no changes were made: \"No calendar changes were needed.\""
+              }
+            ]
+          },
+          "builtInTools": {},
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.googleGemini",
+        "typeVersion": 1.2,
+        "position": [
+          464,
+          0
+        ],
+        "id": "b0d4fcf0-e9b9-4e2f-a079-d8fdb3efa6ef",
+        "name": "Message a model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "2kUNacrQ9rZDOtud",
+            "name": "Hermes main billing"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Calendar Agent": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Try Again",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Event": {
+        "ai_tool": [
+          [
+            {
+              "node": "Calendar Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Events": {
+        "ai_tool": [
+          [
+            {
+              "node": "Calendar Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete Event": {
+        "ai_tool": [
+          [
+            {
+              "node": "Calendar Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update Event": {
+        "ai_tool": [
+          [
+            {
+              "node": "Calendar Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Analyze document",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Calendar Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Analyze document": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Calendar Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Message a model",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Message a model": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Khalil Peguero",
+    "name": "1.0.0",
+    "description": "First production calendar agent for the theta delta chapter",
+    "autosaved": true,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-07-07T18:08:49.746Z",
+        "id": 18,
+        "workflowId": "GlzWdO0w7zkKLz2Z",
+        "versionId": "34bdeea4-ff97-4816-8049-bcfdab6be4b0",
+        "event": "activated",
+        "userId": "ba061434-2599-4a14-aea4-95560a68fb7d"
+      }
+    ]
+  },
+  "scopes": [
+    "execution:reveal",
+    "workflow:create",
+    "workflow:delete",
+    "workflow:disableRedaction",
+    "workflow:enableRedaction",
+    "workflow:execute",
+    "workflow:execute-chat",
+    "workflow:export",
+    "workflow:import",
+    "workflow:list",
+    "workflow:move",
+    "workflow:publish",
+    "workflow:read",
+    "workflow:share",
+    "workflow:unpublish",
+    "workflow:unshare",
+    "workflow:update"
+  ],
+  "checksum": "3c65f14918f9af8114dfc08c7ab49ebdb79c2247e561631c6e0ce40bad4b39df"
+}

@@ -1,0 +1,126 @@
+{
+  "name": "Summarize Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-lite-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-lite-latest"
+        },
+        "text": "You are an assistant that extracts structured information from meeting minutes.\n\nINPUT: A file.\n\nTASKS:\n\nDetermine if the file contains chapter meeting minutes.\nIf it does:\nRead the entire file.\nProduce a concise summary (3–5 sentences max).\nExtract ALL responsibilities and tasks mentioned.\nInclude named individuals.\nInclude roles (e.g., President, Treasurer).\nInclude unnamed/vague groups (e.g., chapter, brothers).\nNormalize into short, clear action items.\nGroup tasks by person/role.\n\nGROUPING RULES:\n\nIf a person/role has multiple tasks, group them under one heading.\nUse bullet points for multiple tasks.\nIf only one task exists, keep it inline.\n\nRULES:\n\nDo not miss scattered or implied tasks.\nCombine duplicates.\nKeep wording short and direct.\nDo not include explanations.\n\nFALLBACK:\n\nIf the file is NOT chapter meeting minutes, output exactly:\nThe file does not seem to be the chapter minutes for the week. Please forward to the appropriate Slack channel.\n\nOUTPUT FORMAT (Slack message, Slack markup only):\n\nThank you for providing the minutes for this week's chapter meeting. Below is a summary:\n\n[summary]\n\nResponsibilities:\n[Name/Role/Group]: [task]\n\n[Name/Role/Group]:\n\n[task]\n[task]",
+        "inputType": "binary",
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "8649f208-c6e8-43a3-8206-143d4898a311",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "2kUNacrQ9rZDOtud",
+          "name": "Hermes main billing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C06Q63STKEH",
+          "mode": "list",
+          "cachedResultName": "chapter-meetings"
+        },
+        "text": "={{ $json.candidates[0].content.parts[0].text }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false,
+          "mrkdwn": true
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "dec542e3-98d6-4869-b2e7-3fb2f2ba80c5",
+      "name": "Send summary",
+      "webhookId": "d628b4e8-d22d-421c-854f-73734980c980",
+      "credentials": {
+        "slackApi": {
+          "id": "QednMfSxt8oWBSXs",
+          "name": "Theta Delta"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "File",
+              "type": "any"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b65e3e6d-958a-4530-88e1-9cf09fb6ba9b",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "Send summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "cd4ffd97-e659-414b-9433-ca5bfc32811f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a55815efdabee8917bab1dac5ab42163ff3659136b3f40ed9e4a87f7a6b0d648"
+  },
+  "nodeGroups": [],
+  "id": "3kGiXQdB5dO6G8AZ",
+  "tags": []
+}
