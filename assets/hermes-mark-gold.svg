@@ -1,0 +1,19 @@
+<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  <circle cx="55" cy="55" r="52" stroke="#C9A84C" stroke-width="0.75" stroke-opacity="0.3"></circle>
+  <circle cx="55" cy="55" r="28" fill="#1A2235" stroke="#C9A84C" stroke-width="1.5"></circle>
+  <circle cx="55" cy="55" r="20" fill="none" stroke="#C9A84C" stroke-width="0.6" stroke-opacity="0.35"></circle>
+  <text x="55" y="63" font-family="&#39;Cormorant Garamond&#39;,Georgia,serif" font-size="26" font-weight="700" fill="#C9A84C" text-anchor="middle">Σ</text>
+  <path d="M27,58 L4,68 L10,57 L27,52 Z" fill="#C9A84C" opacity="0.95"></path>
+  <path d="M27,52 L5,58 L10,48 L27,46 Z" fill="#C9A84C" opacity="0.70"></path>
+  <path d="M27,46 L8,48 L11,39 L27,41 Z" fill="#C9A84C" opacity="0.45"></path>
+  <path d="M83,58 L106,68 L100,57 L83,52 Z" fill="#C9A84C" opacity="0.95"></path>
+  <path d="M83,52 L105,58 L100,48 L83,46 Z" fill="#C9A84C" opacity="0.70"></path>
+  <path d="M83,46 L102,48 L99,39 L83,41 Z" fill="#C9A84C" opacity="0.45"></path>
+  <path d="M32,30 A32,32 0 0,1 78,30" fill="none" stroke="#E8C97A" stroke-width="0.9" stroke-dasharray="3,3" stroke-opacity="0.5"></path>
+  <path d="M32,80 A32,32 0 0,0 78,80" fill="none" stroke="#E8C97A" stroke-width="0.9" stroke-dasharray="3,3" stroke-opacity="0.5"></path>
+  <circle cx="32" cy="30" r="2.5" fill="#E8C97A" opacity="0.6"></circle>
+  <circle cx="78" cy="30" r="2.5" fill="#E8C97A" opacity="0.6"></circle>
+  <circle cx="32" cy="80" r="2.5" fill="#C9A84C" opacity="0.55"></circle>
+  <circle cx="78" cy="80" r="2.5" fill="#C9A84C" opacity="0.55"></circle>
+</svg>
