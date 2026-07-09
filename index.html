@@ -55,7 +55,7 @@
   .nav-links { display: flex; align-items: center; gap: 36px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; }
   .nav-links a { color: #8898B5; }
   .nav-links a:hover { color: #C9A84C; }
-  .nav-cta { display: inline-block; padding: 11px 24px; border-radius: 100px; border: 1px solid rgba(201,168,76,0.4); color: #C9A84C !important; letter-spacing: 2px; transition: all 0.25s ease; }
+  .nav-cta { display: inline-block; padding: 11px 24px; border-radius: 100px; border: 1px solid rgba(201,168,76,0.55); color: #C9A84C !important; letter-spacing: 2px; transition: all 0.25s ease; }
   .nav-cta:hover { background: rgba(201,168,76,0.1); color: #E8C97A !important; }
 
   /* ============ HERO ============ */
@@ -84,6 +84,7 @@
   /* ============ MARQUEE ============ */
   .marquee { border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15); background: #111827; overflow: hidden; padding: 18px 0; }
   .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
   .marquee-group { display: flex; align-items: center; gap: 40px; padding-right: 40px; font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 4px; color: rgba(245,240,232,0.75); white-space: nowrap; }
   .marquee-group .star { color: #C9A84C; }
 
@@ -216,7 +217,7 @@
   .contact-title .gold { color: #C9A84C; }
   .contact-sub { margin: 0; max-width: 440px; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 19px; line-height: 1.7; color: #C8BFA8; }
   .contact-form { display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 460px; text-align: left; }
-  .contact-form input { padding: 20px 4px; border: none; border-bottom: 1px solid rgba(201,168,76,0.25); background: transparent; color: #F5F0E8; font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 2px; transition: border-color 0.25s ease; }
+  .contact-form input { padding: 20px 4px; border: none; border-bottom: 1px solid rgba(201,168,76,0.55); background: transparent; color: #F5F0E8; font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 2px; transition: border-color 0.25s ease; }
   .contact-form input:focus { border-bottom-color: #C9A84C; }
   .contact-form button { margin-top: 36px; padding: 20px 24px; border: none; border-radius: 100px; background: #C9A84C; color: #0A0E1A; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease; }
   .contact-form button:hover { background: #E8C97A; box-shadow: 0 8px 30px rgba(201,168,76,0.3); transform: translateY(-2px); }
@@ -742,7 +743,7 @@
       var widget = document.createElement('div');
       widget.className = 'calendly-inline-widget';
       widget.setAttribute('data-url', CALENDLY_URL + (CALENDLY_URL.indexOf('?') === -1 ? '?' : '&') +
-        'hide_gdpr_banner=1&background_color=111827&text_color=f5f0e8&primary_color=c9a84c');
+        'hide_gdpr_banner=1&background_color=111827&text_color=f5f0e8&primary_color=8a6d24');
       shell.appendChild(widget);
       var s = document.createElement('script');
       s.src = 'https://assets.calendly.com/assets/external/widget.js';
