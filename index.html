@@ -191,6 +191,21 @@
   .btn-primary.lg { padding: 20px 44px; font-size: 14px; }
   .founders-footnote { margin-top: 20px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: #8898B5; }
 
+  /* ============ 06 · BOOK A DEMO ============ */
+  .demo { position: relative; background: #0A0E1A; border-top: 1px solid rgba(201,168,76,0.12); }
+  .demo-inner { position: relative; padding-top: 130px; padding-bottom: 120px; }
+  .demo-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 64px; }
+  .demo-title { margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(48px, 6vw, 84px); line-height: 0.95; letter-spacing: 3px; color: #FFFFFF; }
+  .demo-title .gold { color: #C9A84C; }
+  .demo-sub { margin: 0; max-width: 400px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 21px; line-height: 1.7; color: #C8BFA8; }
+  .calendly-shell { border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; background: #111827; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
+  .calendly-shell .calendly-inline-widget { min-width: 320px; height: 720px; }
+  .demo-fallback { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 72px 32px; text-align: center; }
+  .demo-fallback[hidden] { display: none; }
+  .demo-fallback .headline { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px; color: #F5F0E8; }
+  .demo-fallback .note { margin: 0; max-width: 420px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 19px; line-height: 1.7; color: #C8BFA8; }
+  .demo-note { display: flex; align-items: center; gap: 16px; margin-top: 28px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: #8898B5; }
+
   /* ============ CTA / LEAD CAPTURE ============ */
   .contact { position: relative; background: #111827; border-top: 1px solid rgba(201,168,76,0.15); }
   .contact-inner { position: relative; max-width: 720px; margin: 0 auto; padding: 140px 48px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 36px; }
@@ -205,6 +220,11 @@
   .contact-form input:focus { border-bottom-color: #C9A84C; }
   .contact-form button { margin-top: 36px; padding: 20px 24px; border: none; border-radius: 100px; background: #C9A84C; color: #0A0E1A; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease; }
   .contact-form button:hover { background: #E8C97A; box-shadow: 0 8px 30px rgba(201,168,76,0.3); transform: translateY(-2px); }
+  .contact-form button:disabled { opacity: 0.6; cursor: wait; transform: none; box-shadow: none; }
+  .hp-wrap { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  .form-error { margin-top: 20px; padding: 18px 22px; border: 1px solid rgba(201,84,76,0.5); border-radius: 12px; background: rgba(201,84,76,0.08); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; line-height: 1.7; color: #E0A9A4; }
+  .form-error a { color: #E8C97A; text-decoration: underline; }
+  .form-error[hidden] { display: none; }
   .contact-confirm { display: none; flex-direction: column; gap: 12px; padding: 40px 52px; border: 1px solid rgba(201,168,76,0.35); border-radius: 16px; background: #0A0E1A; }
   .contact-confirm .headline { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: #C9A84C; }
   .contact-confirm .note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 18px; color: #C8BFA8; }
@@ -268,7 +288,7 @@
       <a href="#problem">THE PROBLEM</a>
       <a href="#workflow">THE WORKFLOW</a>
       <a href="#founders">FOUNDERS</a>
-      <a href="#contact" class="nav-cta">BRING HERMEΣ</a>
+      <a href="#book-demo" class="nav-cta">BOOK A DEMO</a>
     </div>
   </nav>
 
@@ -575,6 +595,35 @@
     </div>
   </section>
 
+  <!-- ============ 06 · BOOK A DEMO ============ -->
+  <section id="book-demo" class="demo">
+    <div class="container demo-inner">
+      <div class="kicker">
+        <span class="gold-rule"></span>
+        <span class="kicker-label">Book a Demo</span>
+      </div>
+      <div class="demo-head">
+        <h2 class="demo-title">
+          THIRTY MINUTES.<br><span class="gold">YOUR EXEC BOARD.</span>
+        </h2>
+        <p class="demo-sub">
+          Pick a time and bring your last minutes PDF — we'll run it through HermeΣ live, on your chapter's real notes.
+        </p>
+      </div>
+      <div class="calendly-shell" id="calendly-shell">
+        <div class="demo-fallback" id="demo-fallback" hidden>
+          <span class="headline">DEMO SLOTS OPEN JULY 13</span>
+          <p class="note" id="demo-fallback-note">Scheduling is warming up. Leave your chapter's details below and we'll send you times the moment the calendar opens.</p>
+          <a href="#contact" class="btn-primary" id="demo-fallback-cta">Request a time below</a>
+        </div>
+      </div>
+      <div class="demo-note">
+        <span class="pulse-dot"></span>
+        <span>AT BETACON? SKIP THE CALENDAR — FIND US ON THE FLOOR THROUGH JULY 12.</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CTA / LEAD CAPTURE ============ -->
   <section id="contact" class="contact">
     <div class="contact-inner">
@@ -586,13 +635,20 @@
         BRING HERMEΣ TO<br><span class="gold">YOUR CHAPTER.</span>
       </h2>
       <p class="contact-sub">
-        Leave your chapter's details and we'll set up an exec-board demo. Finding us at Betacon works too — July 9–12.
+        Not ready to <a href="#book-demo">pick a time</a>? Leave your chapter's details and we'll reach out. Finding us at Betacon works too — July 9–12.
       </p>
       <form class="contact-form" id="contact-form">
-        <input type="text" name="name" aria-label="Your name" autocomplete="name" placeholder="YOUR NAME">
-        <input type="text" name="chapter" aria-label="Chapter and school, for example Theta Delta at FIU" autocomplete="organization" placeholder="CHAPTER &amp; SCHOOL — E.G. THETA DELTA · FIU">
-        <input type="email" name="email" aria-label="Email" autocomplete="email" placeholder="EMAIL">
+        <input type="text" name="name" aria-label="Your name" autocomplete="name" placeholder="YOUR NAME" required>
+        <input type="text" name="chapter" aria-label="Chapter and school, for example Theta Delta at FIU" autocomplete="organization" placeholder="CHAPTER &amp; SCHOOL — E.G. THETA DELTA · FIU" required>
+        <input type="email" name="email" aria-label="Email" autocomplete="email" placeholder="EMAIL" required>
+        <div class="hp-wrap" aria-hidden="true">
+          <label for="website-field">Leave this field empty</label>
+          <input type="text" name="website" id="website-field" tabindex="-1" autocomplete="off">
+        </div>
         <button type="submit">Bring HermeΣ to your chapter</button>
+        <div id="form-error" role="alert" class="form-error" hidden>
+          THE MESSENGER STUMBLED — YOUR REQUEST DIDN'T SEND. EMAIL US DIRECTLY AT <a id="form-error-mail" href="#">GETHERMESAPP@GMAIL.COM</a> AND WE'LL SET UP YOUR DEMO.
+        </div>
       </form>
       <div role="status" class="contact-confirm">
         <span class="headline">REQUEST RECEIVED</span>
@@ -624,7 +680,7 @@
         </div>
         <div class="footer-col">
           <span class="col-head">CONTACT</span>
-          <a href="#contact">BOOK A DEMO</a>
+          <a href="#book-demo">BOOK A DEMO</a>
           <a href="#contact">BETACON · JULY 9–12</a>
         </div>
       </div>
@@ -643,17 +699,115 @@
 </div>
 
 <script>
+  // ===== Site config — the only lines you should need to touch =====
   // Founders spots remaining — edit this one number as spots get claimed.
   var SPOTS_LEFT = 19;
   var SPOTS_TOTAL = 20;
+  // Paste your Calendly event link here once created, e.g. 'https://calendly.com/gethermesapp/exec-board-demo'.
+  // While empty, the Book a Demo section shows a "request a time" card pointing at the contact form.
+  var CALENDLY_URL = '';
+  // n8n webhook that stores leads + DMs Khalil. Workflow: "Demo Requests" on api.usehermes.online.
+  var WEBHOOK_URL = 'https://api.usehermes.online/webhook/demo-request';
+  var CONTACT_EMAIL = 'gethermesapp@gmail.com';
+  // =================================================================
 
   document.querySelector('[data-spots-ticker]').textContent = SPOTS_LEFT + ' OF ' + SPOTS_TOTAL + ' FOUNDERS SPOTS LEFT';
   document.querySelector('[data-spots-big]').textContent = SPOTS_LEFT + ' OF ' + SPOTS_TOTAL;
 
-  document.getElementById('contact-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    document.getElementById('contact').classList.add('submitted');
-  });
+  // ===== Book a Demo — Calendly inline embed, lazy-loaded =====
+  (function () {
+    var shell = document.getElementById('calendly-shell');
+    var fallback = document.getElementById('demo-fallback');
+    var fallbackNote = document.getElementById('demo-fallback-note');
+    var fallbackCta = document.getElementById('demo-fallback-cta');
+
+    if (!CALENDLY_URL) {
+      fallback.hidden = false;
+      return;
+    }
+
+    function showScriptFailFallback() {
+      fallbackNote.textContent = 'The embedded calendar couldn’t load here. Open it directly instead — same times, same demo.';
+      fallbackCta.textContent = 'OPEN THE CALENDAR';
+      fallbackCta.href = CALENDLY_URL;
+      fallbackCta.target = '_blank';
+      fallbackCta.rel = 'noopener';
+      fallback.hidden = false;
+    }
+
+    var loaded = false;
+    function loadCalendly() {
+      if (loaded) return;
+      loaded = true;
+      var widget = document.createElement('div');
+      widget.className = 'calendly-inline-widget';
+      widget.setAttribute('data-url', CALENDLY_URL + (CALENDLY_URL.indexOf('?') === -1 ? '?' : '&') +
+        'hide_gdpr_banner=1&background_color=111827&text_color=f5f0e8&primary_color=c9a84c');
+      shell.appendChild(widget);
+      var s = document.createElement('script');
+      s.src = 'https://assets.calendly.com/assets/external/widget.js';
+      s.async = true;
+      s.onerror = function () {
+        shell.removeChild(widget);
+        showScriptFailFallback();
+      };
+      document.body.appendChild(s);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { loadCalendly(); io.disconnect(); }
+      }, { rootMargin: '600px' });
+      io.observe(shell);
+    } else {
+      loadCalendly();
+    }
+  })();
+
+  // ===== Lead capture — POSTs to the n8n Demo Requests webhook =====
+  (function () {
+    var contactSection = document.getElementById('contact');
+    var form = document.getElementById('contact-form');
+    var formError = document.getElementById('form-error');
+    var errorMail = document.getElementById('form-error-mail');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var urlParams = new URLSearchParams(window.location.search);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      formError.hidden = true;
+      submitBtn.disabled = true;
+      var originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'SENDING…';
+
+      var data = new FormData(form);
+      var payload = {
+        name: (data.get('name') || '').trim(),
+        chapter: (data.get('chapter') || '').trim(),
+        email: (data.get('email') || '').trim(),
+        website: data.get('website') || '',
+        utm_source: urlParams.get('utm_source') || '',
+        utm_campaign: urlParams.get('utm_campaign') || ''
+      };
+
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        contactSection.classList.add('submitted');
+      }).catch(function () {
+        errorMail.href = 'mailto:' + CONTACT_EMAIL +
+          '?subject=' + encodeURIComponent('Demo request — ' + payload.chapter) +
+          '&body=' + encodeURIComponent('Name: ' + payload.name + '\nChapter: ' + payload.chapter + '\nEmail: ' + payload.email);
+        formError.hidden = false;
+      }).then(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      });
+    });
+  })();
 </script>
 </body>
 </html>
